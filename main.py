@@ -4,8 +4,6 @@ from src import logger
 
 _mode = ''
 
-logger.set_log_write_file()
-
 def _get_mode():
   global _mode
   if len(sys.argv) != 2:
