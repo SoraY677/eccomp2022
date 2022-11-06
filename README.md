@@ -59,28 +59,29 @@
 ### 環境構築
 
 ```bash
-TODO
-```
+# Anacondaの環境を作成（最初だけ実行）
+$ make env-init
 
-<details>
-  <summary>Anacondaによる開発作成</summary>
-  
-	```bash
+# Anacondaの環境を有効化
+$ make env-activate
 
-	# create
-	$ conda create -n eccomp2022 python=3.8
+# pythonの必要モジュールインストール
+$ make install
 
-	# confirm
-	$ conda info -e
+# demoモードで起動
+$ make run-demo
 
-	# activate
-	$ conda activate eccomp2022
+# 本番モードで起動
+$ make run-prod
 
-	# deactivate
-	$ conda deactivate
+# pythonモジュールを書き出し
+$ make package
 
-	# delete
-	$ conda remove -n eccomp2022 --all
+# Anacondaの環境を無効化
+$ make env-deactivate
+
+# Anacondaの環境を削除
+$ make env-delete
 ```
 
 ### ディレクトリ構成
