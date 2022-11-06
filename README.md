@@ -51,7 +51,7 @@
 - [Python](https://www.python.org/) v3.8.13 
   - `python -V`
 - Makefile
-  - [for Windos](https://gnuwin32.sourceforge.net/packages/make.htm)
+  - [for Windows](https://gnuwin32.sourceforge.net/packages/make.htm)
 - Windows 11Home
 - 
 なお[Anaconda](https://www.anaconda.com/products/distribution)を用いて仮想環境にて開発
