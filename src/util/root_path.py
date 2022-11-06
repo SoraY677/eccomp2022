@@ -1,6 +1,3 @@
-#
-# プロジェクトのパスを算出
-#
 import os
 
 PROJECT_NAME = 'eccomp2022'
