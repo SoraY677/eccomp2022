@@ -46,10 +46,41 @@
 
 ## dev
 
+### 開発環境
+
+- [Python](https://www.python.org/) v3.8.13 
+  - `python -V`
+- Makefile
+  - [for Windos](https://gnuwin32.sourceforge.net/packages/make.htm)
+- Windows 11Home
+- 
+なお[Anaconda](https://www.anaconda.com/products/distribution)を用いて仮想環境にて開発
+
 ### 環境構築
 
 ```bash
 TODO
+```
+
+<details>
+  <summary>Anacondaによる開発作成</summary>
+  
+	```bash
+
+	# create
+	$ conda create -n eccomp2022 python=3.8
+
+	# confirm
+	$ conda info -e
+
+	# activate
+	$ conda activate eccomp2022
+
+	# deactivate
+	$ conda deactivate
+
+	# delete
+	$ conda remove -n eccomp2022 --all
 ```
 
 ### ディレクトリ構成
@@ -67,11 +98,7 @@ TODO
 - README.md
 ```
 
-### 開発環境
-
-```bash
-# TODO
-```
+</details>
 
 ## ドキュメント
 
