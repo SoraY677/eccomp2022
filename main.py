@@ -8,10 +8,10 @@ logger.set_log_write_file()
 
 def _get_mode():
   global _mode
-  if len(sys.argv) < 2:
+  if len(sys.argv) != 2:
     _mode = ''
   else:
-    _mode = sys.argv[2]
+    _mode = sys.argv[1]
 _get_mode()
 
 def _switch_process(mode):

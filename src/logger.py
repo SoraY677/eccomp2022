@@ -5,7 +5,7 @@ from .util import root_path as rp
 WRITE_FILE_PATH = os.path.join(rp.get_root_path(), 'app.log')
 
 def set_log_write_file():
-  logging.basicConfig(filename=WRITE_FILE_PATH)
+  logging.basicConfig(filename=WRITE_FILE_PATH, level="DEBUG")
 
 def log_debug(message):
   logging.debug(message)
