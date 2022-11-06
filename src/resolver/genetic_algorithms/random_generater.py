@@ -30,7 +30,7 @@ def generate(
   for i in range(time_max):
     count_list[i] = select_list.count(i)
 
-  logger.log_debug(count_list)
+  logger.log_info(count_list)
   logger.log_info(f'agent length check....: [length]{length} : [sum]{sum(count_list)}')
   if sum(count_list) == length:
     logger.log_info('no problem!!')

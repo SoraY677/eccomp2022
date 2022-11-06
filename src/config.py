@@ -10,8 +10,7 @@ _config = {}
 
 def _read_config():
   global _config
-  root_path = project_dir
-  with open(os.path.join(root_path, 'config.yml')) as file:
+  with open(os.path.join(project_dir, 'config.yml')) as file:
     _config = yaml.safe_load(file)
     logger.log_info(f'config.yml: {_config}')
 _read_config()

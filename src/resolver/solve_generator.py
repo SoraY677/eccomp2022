@@ -1,4 +1,4 @@
-from genetic_algorithms import random_generater
+import genetic_algorithms
 
 def generate_origin_agent(
       length,
@@ -19,7 +19,7 @@ def generate_origin_agent(
     Array<Int>: 各エージェントの出発時刻の配列
   '''
 
-  return random_generater.generate(
+  return genetic_algorithms.generate(
       length,
       unit_second_min,
       unit_second_max,

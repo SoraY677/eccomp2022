@@ -11,6 +11,11 @@ WRITE_FILE_PATH = os.path.join(project_dir, 'log', _time + '.log')
 
 logging.basicConfig(filename=WRITE_FILE_PATH, level=logging.DEBUG)
 
+ch = logging.StreamHandler()
+ch.setLevel(logging.DEBUG)
+formatter = logging.Formatter('[%(levelname)s] %(asctime)s | %(message)s')
+ch.setFormatter(formatter)
+
 def log_debug(message):
   logging.debug(message)
 
