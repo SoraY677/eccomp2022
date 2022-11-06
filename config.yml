@@ -2,11 +2,16 @@ sop:
   demo: 
     1:
       length: 300
+      is_type_categorize: false
       agent_sum: 4500
       unit_second_min: 0
       unit_second_max: 45
     2:
       length: 900
+      is_type_categorize: true
+      type_guided_sum: 300
+      type_busy_sum: 300
+      type_slow_sum: 300
       agent_sum: 4500
       unit_second_min: 0
       unit_second_max: 45
