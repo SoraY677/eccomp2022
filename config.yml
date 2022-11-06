@@ -2,14 +2,22 @@ sop:
   demo: 
     1:
       length: 300
-      agent: 4500
+      agent_sum: 4500
+      unit_second_min: 0
+      unit_second_max: 45
     2:
       length: 900
-      agent: 4500
+      agent_sum: 4500
+      unit_second_min: 0
+      unit_second_max: 45
   prod:
     1:
       length: 300
-      agent: 4660
+      agent_sum: 4660
+      unit_second_min: 0
+      unit_second_max: 45
     2:
       length: 900
-      agent: 4079
+      agent_sum: 4079
+      unit_second_min: 0
+      unit_second_max: 45
