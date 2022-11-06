@@ -20,7 +20,7 @@ def _switch_process(mode):
   elif(mode == constraint.MODE_PROD):
     logger.log_info('prod process')
   else:
-    logger.log_error('prod process')
+    logger.log_error('mode wrong!')
   
 def _run():
   global _mode
