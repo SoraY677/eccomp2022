@@ -21,7 +21,7 @@ def create_probability_density_function(arr1, arr2, cross_point_num):
     point_index = random.randint(0, len(is_selected_point_arr)-1)
     is_selected_point_arr[point_index] = True
 
-  new_solve = []
+  result = []
   prev_point_index = 0
   is_target_arr1 = True
   for i in range(len(is_selected_point_arr)):
@@ -30,12 +30,12 @@ def create_probability_density_function(arr1, arr2, cross_point_num):
       new_solve += arr[prev_point_index:i+1]
       is_target_arr1 = not is_target_arr1
       prev_point_index = i + 1
-  new_solve += arr[prev_point_index:]
-  logger.log_info('new solve: {new_solve}')
-  return new_solve
+  result += arr[prev_point_index:]
+  logger.log_info('new solve: {result}')
+  return result
 
 
 if __name__ == '__main__':
   for i in range(1000):
-    new_solve = create_probability_density_function([1,2,3,4,5],[6,7,8,9,0],6)
-    print(new_solve)
+    result = create_probability_density_function([1,2,3,4,5],[6,7,8,9,0],6)
+    print(result)
