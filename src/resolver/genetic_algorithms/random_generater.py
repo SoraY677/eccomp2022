@@ -4,12 +4,11 @@ import random
 
 if __name__ == '__main__':
   sys.path.append(os.path.abspath('../..'))
-  import logger
 else:
   current_dir = os.path.abspath(os.curdir)
   project_dir = current_dir[:current_dir.find("eccomp2022")+len("eccomp2022")]
   sys.path.append(os.path.join(project_dir, 'src'))
-  import logger
+import logger
 
 def generate(
       length,
@@ -41,12 +40,11 @@ def generate(
 
 if __name__ == '__main__':
   import graph_plotter
-  length = 300
+  length = 4500
   unit_second_min = 0
   unit_second_max = 45
   time_max = 300
   count_list = generate(length, unit_second_min, unit_second_max, time_max)
-  print(len(count_list))
-  graph_plotter.plotPersonPerTime(count_list)
+  graph_plotter.plot_person_per_time(count_list)
   
 
