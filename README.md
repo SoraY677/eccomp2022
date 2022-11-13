@@ -83,28 +83,28 @@ JSON
 
 ```bash
 # Anacondaの環境を作成（最初だけ実行）
-$ make env-init
+$ conda create -n eccomp2022 python=3.8
 
 # Anacondaの環境を有効化
-$ make env-activate
+$ conda activate eccomp2022
 
 # pythonの必要モジュールインストール
-$ make install
+$ pip install -r requirements.txt
 
 # demoモードで起動
-$ make run-demo
+$ python main.py demo
 
 # 本番モードで起動
-$ make run-prod
+$ python main.py prod
 
 # pythonモジュールを書き出し
-$ make package
+$ pip freeze > requirements.txt
 
 # Anacondaの環境を無効化
-$ make env-deactivate
+$ conda deactivate
 
 # Anacondaの環境を削除
-$ make env-delete
+$ conda remove -n eccomp2022 --all
 ```
 
 ### ディレクトリ構成
