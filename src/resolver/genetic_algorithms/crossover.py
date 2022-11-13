@@ -27,7 +27,7 @@ def create_probability_density_function(arr1, arr2, cross_point_num):
   for i in range(len(is_selected_point_arr)):
     if is_selected_point_arr[i]:
       arr = arr1 if is_target_arr1 else arr2
-      new_solve += arr[prev_point_index:i+1]
+      result += arr[prev_point_index:i+1]
       is_target_arr1 = not is_target_arr1
       prev_point_index = i + 1
   result += arr[prev_point_index:]
