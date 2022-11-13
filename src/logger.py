@@ -2,8 +2,11 @@ import os
 import logging
 import datetime
 
+from dotenv import load_dotenv
+load_dotenv()
+PROJECT_NAME = os.getenv('PROJECT_NAME')
 current_dir = os.path.abspath(os.curdir)
-project_dir = current_dir[:current_dir.find("eccomp2022")+len("eccomp2022")]
+project_dir = current_dir[:current_dir.find(PROJECT_NAME)+len(PROJECT_NAME)]
 
 _dt =  datetime.datetime.today()
 _time = f'{_dt.year}-{_dt.month}-{_dt.day}-{_dt.hour}-{_dt.minute}-{_dt.second}'

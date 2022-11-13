@@ -17,7 +17,9 @@ prompt-toolkit==3.0.8
 pycodestyle==2.6.0
 pyflakes==2.2.0
 Pygments==2.7.2
+python-dotenv==0.21.0
 pywin32==228
+PyYAML==6.0
 pyzmq==19.0.2
 toml==0.10.1
 tornado==6.1

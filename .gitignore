@@ -3,3 +3,4 @@ app.log
 
 log/*
 !/log/.gitkeep
+.env

@@ -4,8 +4,6 @@ sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 import datetime
 
 import logger
-import constraint
-
 import resolver 
 
 def process():
