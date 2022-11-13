@@ -12,10 +12,10 @@ _dt =  datetime.datetime.today()
 _time = f'{_dt.year}-{_dt.month}-{_dt.day}-{_dt.hour}-{_dt.minute}-{_dt.second}'
 WRITE_FILE_PATH = os.path.join(project_dir, 'log', _time + '.log')
 
-logging.basicConfig(filename=WRITE_FILE_PATH, level=logging.DEBUG)
+logging.basicConfig(filename=WRITE_FILE_PATH, level=logging.INFO)
 
 ch = logging.StreamHandler()
-ch.setLevel(logging.DEBUG)
+ch.setLevel(logging.INFO)
 formatter = logging.Formatter('[%(levelname)s] %(asctime)s | %(message)s')
 ch.setFormatter(formatter)
 

@@ -40,4 +40,13 @@ def generate(
   return count_list
 
 if __name__ == '__main__':
-  generate(300, 0, 45, 299)
+  import graph_plotter
+  length = 300
+  unit_second_min = 0
+  unit_second_max = 45
+  time_max = 300
+  count_list = generate(length, unit_second_min, unit_second_max, time_max)
+  print(len(count_list))
+  graph_plotter.plotPersonPerTime(count_list)
+  
+
