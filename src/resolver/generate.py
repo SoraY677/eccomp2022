@@ -5,12 +5,15 @@ import random
 if __name__ == '__main__':
   sys.path.append(os.path.abspath('../..'))
 else:
+  from dotenv import load_dotenv
+  load_dotenv()
+  PROJECT_NAME = os.getenv('PROJECT_NAME')
   current_dir = os.path.abspath(os.curdir)
-  project_dir = current_dir[:current_dir.find("eccomp2022")+len("eccomp2022")]
+  project_dir = current_dir[:current_dir.find("{PROJECT_NAME}")+len("{PROJECT_NAME}")]
   sys.path.append(os.path.join(project_dir, 'src'))
 import logger
 
-def first_generate(
+def random_generate(
       length,
       unit_second_min,
       unit_second_max,
@@ -29,7 +32,7 @@ def first_generate(
   Returns:
       list<int>
   '''
-  logger.log_info('[generate]')
+  logger.log_info('[random generate]')
   # 各時刻分×最大人数 の配列を生成
   lottery_list = [i for i in range(time_max)] * (unit_second_max - unit_second_min)
   # 最大数まで選び出し、数字をカウント
@@ -52,7 +55,7 @@ def first_generate(
 
   return count_list
 
-def process_generate():
+def resemble_generate():
   '''
   2回目以降の解生成
   近似関数から解を生成
