@@ -14,7 +14,7 @@ else:
 import logger
 
 def cross(arr1, arr2, cross_point_num):
-  logger.log_info('[crossover start]')
+  logger.log_info('[crossover]')
   logger.log_info('arr1: {arr1}')
   logger.log_info('arr2: {arr2}')
   if len(arr1) != len(arr2):
@@ -35,7 +35,7 @@ def cross(arr1, arr2, cross_point_num):
       is_target_arr1 = not is_target_arr1
       prev_point_index = i + 1
   result += arr[prev_point_index:]
-  logger.log_info('new solve: {result}')
+  logger.log_info('cross over result: {result}')
   return result
 
 

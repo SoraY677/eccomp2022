@@ -10,15 +10,14 @@ else:
   sys.path.append(os.path.join(project_dir, 'src'))
 import logger
 
-
-
-def random_generate(
+def first_generate(
       length,
       unit_second_min,
       unit_second_max,
       time_max
     ):
   '''
+  初期解生成
   ランダムに解を生成
 
   Args:
@@ -30,6 +29,7 @@ def random_generate(
   Returns:
       list<int>
   '''
+  logger.log_info('[generate]')
   # 各時刻分×最大人数 の配列を生成
   lottery_list = [i for i in range(time_max)] * (unit_second_max - unit_second_min)
   # 最大数まで選び出し、数字をカウント
@@ -52,4 +52,10 @@ def random_generate(
 
   return count_list
 
+def process_generate():
+  '''
+  2回目以降の解生成
+  近似関数から解を生成
+  '''
+  pass
 
