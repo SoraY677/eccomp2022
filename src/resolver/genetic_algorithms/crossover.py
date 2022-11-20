@@ -5,12 +5,16 @@ import random
 if __name__ == '__main__':
   sys.path.append(os.path.abspath('../..'))
 else:
+  from dotenv import load_dotenv
+  load_dotenv()
+  PROJECT_NAME = os.getenv('PROJECT_NAME')
   current_dir = os.path.abspath(os.curdir)
-  project_dir = current_dir[:current_dir.find("eccomp2022")+len("eccomp2022")]
+  project_dir = current_dir[:current_dir.find("{PROJECT_NAME}")+len("{PROJECT_NAME}")]
   sys.path.append(os.path.join(project_dir, 'src'))
 import logger
 
-def create_probability_density_function(arr1, arr2, cross_point_num):
+def cross(arr1, arr2, cross_point_num):
+  logger.log_info('[crossover start]')
   logger.log_info('arr1: {arr1}')
   logger.log_info('arr2: {arr2}')
   if len(arr1) != len(arr2):
@@ -35,7 +39,3 @@ def create_probability_density_function(arr1, arr2, cross_point_num):
   return result
 
 
-if __name__ == '__main__':
-  for i in range(1000):
-    result = create_probability_density_function([1,2,3,4,5],[6,7,8,9,0],6)
-    print(result)

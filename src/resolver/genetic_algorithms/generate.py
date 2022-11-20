@@ -10,18 +10,32 @@ else:
   sys.path.append(os.path.join(project_dir, 'src'))
 import logger
 
-def generate(
+
+
+def random_generate(
       length,
       unit_second_min,
       unit_second_max,
       time_max
     ):
+  '''
+  ランダムに解を生成
+
+  Args:
+    - length (Int)
+    - unit_second_min (Int)
+    - unit_second_max (Int)
+    - time_max (Int)
+
+  Returns:
+      list<int>
+  '''
   # 各時刻分×最大人数 の配列を生成
   lottery_list = [i for i in range(time_max)] * (unit_second_max - unit_second_min)
   # 最大数まで選び出し、数字をカウント
   select_list = []
   for _ in range(length):
-    selected_i = random.randint(0, len(lottery_list))
+    selected_i = random.randint(0, len(lottery_list) - 1)
     select_list.append(lottery_list.pop(selected_i))
   select_list.sort()
   select_list = tuple(select_list)
@@ -38,13 +52,4 @@ def generate(
 
   return count_list
 
-if __name__ == '__main__':
-  import graph_plotter
-  length = 4500
-  unit_second_min = 0
-  unit_second_max = 45
-  time_max = 300
-  count_list = generate(length, unit_second_min, unit_second_max, time_max)
-  graph_plotter.plot_person_per_time(count_list)
-  
 
