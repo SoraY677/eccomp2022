@@ -19,7 +19,7 @@ def process():
   dt_start =  datetime.datetime.today()
   logger.log_info(f'[start]{dt_start.year}-{dt_start.month}-{dt_start.day} {dt_start.hour}:{dt_start.minute}:{dt_start.second}')
 
-  resolver.generate_solve(300, 0, 45, 0, 0, 0, 300)
+  # resolver.generate_solve(300, 0, 45, 0, 0, 0, 300)
 
   dt_end = datetime.datetime.today()
   logger.log_info(f'[end]{dt_end.year}-{dt_end.month}-{dt_end.day} {dt_end.hour}:{dt_end.minute}:{dt_end.second}')

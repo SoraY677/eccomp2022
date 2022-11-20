@@ -12,6 +12,11 @@ else:
   sys.path.append(os.path.join(project_dir, 'src'))
 import logger
 
+from generate import random_generate
+
 def mutate():
   logger.log_info('[mutate]')
+  solution = random_generate()
+  logger.log_info('mutate solution: {solution}')
+  return solution
 

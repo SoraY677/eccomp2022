@@ -53,12 +53,11 @@ def random_generate(
   else:
     logger.log_error('agent length check fail!')
 
+  isSizePass = max(count_list) < (unit_second_max - unit_second_min)
+  logger.log_info(f'agent size over check....: {isSizePass}')
+  if isSizePass:
+    logger.log_info('no problem!!')
+  else:
+    logger.log_error('agent size check fail!')
+
   return count_list
-
-def resemble_generate():
-  '''
-  2回目以降の解生成
-  近似関数から解を生成
-  '''
-  pass
-
