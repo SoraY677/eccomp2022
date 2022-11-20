@@ -14,9 +14,14 @@ import logger
 
 from generate import random_generate
 
-def mutate():
+def mutate(
+      length,
+      unit_second_min,
+      unit_second_max,
+      time_max
+    ):
   logger.log_info('[mutate]')
-  solution = random_generate()
-  logger.log_info('mutate solution: {solution}')
+  solution = random_generate(length,unit_second_min,unit_second_max,time_max)
+  logger.log_info(f'mutate solution: {solution}')
   return solution
 

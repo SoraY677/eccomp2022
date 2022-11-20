@@ -34,6 +34,7 @@ def random_generate(
   '''
   logger.log_info('[random generate]')
   # 各時刻分×最大人数 の配列を生成
+  print((unit_second_max - unit_second_min))
   lottery_list = [i for i in range(time_max)] * (unit_second_max - unit_second_min)
   # 最大数まで選び出し、数字をカウント
   select_list = []

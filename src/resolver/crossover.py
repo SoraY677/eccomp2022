@@ -24,14 +24,28 @@ def cross(
     unit_second_min,
     unit_second_max,):
   logger.log_info('cross')
-  logger.log_info('arr1: {arr1}')
-  logger.log_info('arr2: {arr2}')
+  logger.log_info(f'arr1: {arr1}')
+  logger.log_info(f'arr2: {arr2}')
   if len(arr1) != len(arr2):
     logger.log_error('cross over arr length not correct!')
   cross_origin_result = _cross_2solutions(arr1, arr2, cross_point_num)
   result = _create_new_solution(cross_origin_result, length, unit_second_min, unit_second_max)
 
-  logger.log_info('cross result: {result}')
+  logger.log_info(f'cross result: {result}')
+
+  logger.log_info(f'agent length check....: [length]{length} : [sum]{sum(result)}')
+  if sum(result) == length:
+    logger.log_info('no problem!!')
+  else:
+    logger.log_error('agent length check fail!')
+
+  isSizePass = max(result) < (unit_second_max - unit_second_min)
+  logger.log_info(f'agent size over check....: {isSizePass}')
+  if isSizePass:
+    logger.log_info('no problem!!')
+  else:
+    logger.log_error('agent size check fail!')
+
   return result
 
 def union(
@@ -42,14 +56,27 @@ def union(
     unit_second_max
   ):
   logger.log_info('union')
-  logger.log_info('arr1: {arr1}')
-  logger.log_info('arr2: {arr2}')
+  logger.log_info(f'arr1: {arr1}')
+  logger.log_info(f'arr2: {arr2}')
   if len(arr1) != len(arr2):
     logger.log_error('cross over arr length not correct!')
   union_origin_result = _union_2solutions(arr1, arr2)
   result = _create_new_solution(union_origin_result, length, unit_second_min, unit_second_max)
 
-  logger.log_info('union result: {result}')
+  logger.log_info(f'union result: {result}')
+
+  logger.log_info(f'agent length check....: [length]{length} : [sum]{sum(result)}')
+  if sum(result) == length:
+    logger.log_info('no problem!!')
+  else:
+    logger.log_error('agent length check fail!')
+
+  isSizePass = max(result) < (unit_second_max - unit_second_min)
+  logger.log_info(f'agent size over check....: {isSizePass}')
+  if isSizePass:
+    logger.log_info('no problem!!')
+  else:
+    logger.log_error('agent size check fail!')
   return result
 
 def _cross_2solutions(arr1, arr2, cross_point_num):
@@ -74,7 +101,7 @@ def _cross_2solutions(arr1, arr2, cross_point_num):
 def _union_2solutions(arr1, arr2):
   new_arr = []
   for i in range(len(arr1)):
-    new_arr += arr1[i] + arr2[i]
+    new_arr.append(arr1[i] + arr2[i])
   return new_arr
 
 def _approximate_function(crossed_arr):
@@ -96,7 +123,7 @@ def _create_new_solution(
 
   select_list = [0 for _ in range(origin_result_len)]
   weights = [item / origin_result_sum for item in origin_result_arr]
-  for _ in range(len(length)):
+  for _ in range(length):
     selected_index = random.choices(list(range(origin_result_len)), k=1, weights=weights)[0]
     select_list[selected_index] += 1
     if select_list[selected_index] == (unit_second_max - unit_second_min):

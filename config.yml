@@ -1,12 +1,12 @@
 measureSecond: 300
 sop:
-  demo: 
+  demo:
     1:
-      length: 300
-      is_type_categorize: false
-      agent_sum: 4500
+      time_max: 300
       unit_second_min: 0
       unit_second_max: 45
+      is_type_categorize: false
+      agent_sum: 4500
     2:
       length: 900
       is_type_categorize: true
