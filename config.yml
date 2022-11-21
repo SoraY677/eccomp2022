@@ -3,27 +3,31 @@ sop:
   demo:
     1:
       time_max: 300
-      unit_second_min: 0
-      unit_second_max: 45
-      is_type_categorize: false
+      unit_minute_min: 0
+      unit_minute_max: 45
       agent_sum: 4500
+      is_type_categorize: false
     2:
-      length: 900
+      time_max: 300
+      agent_sum: 4500
+      unit_minute_min: 0
+      unit_minute_max: 45
       is_type_categorize: true
       type_guided_sum: 300
       type_busy_sum: 300
       type_slow_sum: 300
-      agent_sum: 4500
-      unit_second_min: 0
-      unit_second_max: 45
   prod:
     1:
-      length: 300
+      time_max: 300
+      unit_minute_min: 0
+      unit_minute_max: 45
       agent_sum: 4660
-      unit_second_min: 0
-      unit_second_max: 45
     2:
       length: 900
+      unit_minute_min: 0
+      unit_minute_max: 45
       agent_sum: 4079
-      unit_second_min: 0
-      unit_second_max: 45
+      is_type_categorize: true
+      type_guided_sum: 300
+      type_busy_sum: 300
+      type_slow_sum: 300

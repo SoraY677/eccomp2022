@@ -15,13 +15,27 @@ import logger
 from generate import random_generate
 
 def mutate(
-      length,
-      unit_second_min,
-      unit_second_max,
-      time_max
+      time_max,
+      unit_minute_min,
+      unit_minute_max,
+      agent_sum
     ):
+  '''
+  突然変異
+  = 初期解生成時のランダム生成
+
+  Args:
+      time_max (Int)
+      unit_minute_min (Int)
+      unit_minute_max (Int)
+      agent_sum (Int)
+
+  Returns:
+      List<Int>: 生成した解
+  '''
+
   logger.log_info('[mutate]')
-  solution = random_generate(length,unit_second_min,unit_second_max,time_max)
+  solution = random_generate(time_max, unit_minute_min, unit_minute_max, agent_sum)
   logger.log_info(f'mutate solution: {solution}')
   return solution
 
