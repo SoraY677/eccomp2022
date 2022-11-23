@@ -9,8 +9,9 @@ else:
   load_dotenv()
   PROJECT_NAME = os.getenv('PROJECT_NAME')
   current_dir = os.path.abspath(os.curdir)
-  project_dir = current_dir[:current_dir.find("{PROJECT_NAME}")+len("{PROJECT_NAME}")]
-  sys.path.append(os.path.join(project_dir, 'src'))
+  project_dir = current_dir[:current_dir.find(f"{PROJECT_NAME}")+len(f"{PROJECT_NAME}")]
+  src_dir = os.path.join(project_dir, 'src')
+  if src_dir not in sys.path: sys.path.append(src_dir)
 import logger
 
 def random_generate(

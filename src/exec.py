@@ -23,7 +23,6 @@ def run(
   agent_sum = config_map['agent_sum']
   solution_list_max = config_map['solution_list_max']
   submit_max = config_map['submit_max']
-  file_name = f"{optimize_mode}-{mode}-{optimize_number}.csv"
 
   if config_map['is_type_categorize']:
     categorized_exec(
@@ -35,8 +34,7 @@ def run(
       config_map['type_busy_sum'],
       config_map['type_slow_sum'],
       solution_list_max,
-      submit_max,
-      file_name
+      submit_max
     )
 
   else:
@@ -46,8 +44,7 @@ def run(
       unit_minute_max,
       agent_sum,
       solution_list_max,
-      submit_max,
-      file_name
+      submit_max
     )
 
 
@@ -61,7 +58,6 @@ def categorized_exec(
       type_slow_sum:int,
       solution_list_max: int,
       submit_max: int,
-      file_name: str
     ) -> None:
   '''
   カテゴリ分けアリの実行
@@ -75,14 +71,12 @@ def not_categorized_exec(
       unit_minute_max: int,
       agent_sum: int,
       solution_list_max: int,
-      submit_max: int,
-      file_name: str
+      submit_max: int
     ) -> None:
   '''
   カテゴリ分けナシの実行
   '''
   solution_list = [resolver.first_generate(time_max, unit_minute_min, unit_minute_max, agent_sum) for _ in range(solution_list_max)]
-  submit.init(file_name)
   LOOP_MAX = int(submit_max / solution_list_max)
   logger.log_info(f'loop max : {LOOP_MAX}')
   for i in range(LOOP_MAX):

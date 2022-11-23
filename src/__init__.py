@@ -6,6 +6,7 @@ import datetime
 import logger
 import constraint
 from exec import run
+import submit
 
 def get_argv() -> None:
   '''
@@ -40,6 +41,9 @@ def process() -> None:
   logger.log_info('process start')
 
   mode, optimize_mode, optimize_number = get_argv()
+
+  file_name = f"{optimize_mode}-{mode}-{optimize_number}"
+  submit.init(file_name)
 
   logger.log_info(f'app start')
   logger.log_info(f'[mode] {mode}')
