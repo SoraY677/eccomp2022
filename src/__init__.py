@@ -69,6 +69,3 @@ def process() -> None:
   logger.log_info(f'[process result]{dt_dif.days}d {dt_dif.seconds}.{dt_dif.microseconds}s')
   
 __all__ = ['process']
-
-if __name__ == "__main__":
-  print(sys.argv)
