@@ -21,7 +21,7 @@ def _read_config() -> None:
     logger.log_info(f'config.yml: {_config}')
 _read_config()
 
-def get_config() -> None:
+def get_config() -> map:
   '''
   設定変数を返す
 

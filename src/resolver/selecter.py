@@ -1,6 +1,8 @@
 import os
 import sys
 
+import random
+
 if __name__ == '__main__':
   sys.path.append(os.path.abspath('../..'))
 else:
@@ -14,4 +16,5 @@ import logger
 
 def select(solution_score_list: list) -> int:
   logger.log_info('[select]')
+  return random.randint(0, len(solution_score_list) - 1)
   

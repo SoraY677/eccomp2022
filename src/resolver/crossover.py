@@ -27,7 +27,7 @@ def cross(
   '''
   交叉
   '''
-  logger.log_info('cross')
+  logger.log_info('[cross]')
   logger.log_info(f'arr1: {arr1}')
   logger.log_info(f'arr2: {arr2}')
   if len(arr1) != len(arr2):
@@ -43,8 +43,8 @@ def cross(
   else:
     logger.log_error('agent length check fail!')
 
-  isSizePass = max(result) < (unit_minute_max - unit_minute_min)
-  logger.log_info(f'agent size over check....: {isSizePass}')
+  isSizePass = max(result) <= ( unit_minute_max - unit_minute_min )
+  logger.log_info(f'agent size over check....: {max(result)}')
   if isSizePass:
     logger.log_info('no problem!!')
   else:
@@ -78,8 +78,8 @@ def union(
   else:
     logger.log_error('agent length check fail!')
 
-  isSizePass = max(result) < ( unit_minute_max - unit_minute_min)
-  logger.log_info(f'agent size over check....: {isSizePass}')
+  isSizePass = max(result) <= ( unit_minute_max - unit_minute_min )
+  logger.log_info(f'agent size over check....: {max(result)}')
   if isSizePass:
     logger.log_info('no problem!!')
   else:
@@ -126,7 +126,7 @@ def _union_2solutions(
 
 def _approximate_function(
    arr: list
-  ) -> function:
+  ) -> any:
   '''
   近似関数を求める
   '''
