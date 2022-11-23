@@ -16,6 +16,7 @@ else:
   src_dir = os.path.join(project_dir, 'src')
   if src_dir not in sys.path: sys.path.append(src_dir)
 import logger
+import graph_plotter
 
 def cross(
     arr1: list,
@@ -134,6 +135,8 @@ def _approximate_function(
   t = np.arange(len(arr))
   x = np.array(arr)
   func = interp1d(t,x,kind='cubic')
+  
+  graph_plotter.plot_person_per_time_and_approximate_function(t, x, func)
   return func
 
 def _create_new_solution(
@@ -160,4 +163,3 @@ def _create_new_solution(
       weights[selected_index] = 0
 
   return select_list
-

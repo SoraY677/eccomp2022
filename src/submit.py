@@ -1,5 +1,6 @@
 import os
 import random
+import shutil
 
 import logger
 
@@ -13,7 +14,8 @@ filepath = ""
 best_score_list = []
 
 def init(
-  filename:str
+  filename:str,
+  is_clear: bool
 ) -> None:
   '''
   初期化
@@ -23,6 +25,12 @@ def init(
   global best_score_list
   global filepath
   save_dir = os.path.join(project_dir, 'log', 'score')
+  
+  if is_clear:
+    try:
+      shutil.rmtree(save_dir)
+    except:
+      pass
   os.makedirs(save_dir, exist_ok=True)
   filepath = os.path.join(save_dir, filename)
   try:
@@ -58,6 +66,9 @@ def run(
   with open(filepath, 'w') as f:
       score_text = "\n".join([str(best_score) for best_score in best_score_list])
       f.write(f'{score_text}')
-  
 
   return score
+
+def get_best_score_list():
+  global best_score_list
+  return best_score_list

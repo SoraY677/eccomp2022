@@ -30,4 +30,3 @@ def mutate(
   solution = random_generate(time_max, unit_minute_min, unit_minute_max, agent_sum)
   logger.log_info(f'mutate solution: {solution}')
   return solution
-

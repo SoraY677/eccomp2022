@@ -1,5 +1,6 @@
 import os
 import json
+import shutil
 
 import logger
 
@@ -11,11 +12,20 @@ project_dir = current_dir[:current_dir.find(f"{PROJECT_NAME}")+len(f"{PROJECT_NA
 
 filepath = ""
 
-def init(filename):
+def init(
+    filename: str,
+    is_clear: bool
+  ):
   global filepath
   save_dir = os.path.join(project_dir, 'log', 'store')
+  if is_clear:
+    try:
+      shutil.rmtree(save_dir)
+    except:
+      pass
   os.makedirs(save_dir, exist_ok=True)
   filepath = os.path.join(save_dir, f'{filename}.json')
+  
 
   try:
     logger.log_info(f'search {filepath}')

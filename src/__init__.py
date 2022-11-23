@@ -8,6 +8,13 @@ import constraint
 from exec import run
 import submit
 import store
+import graph_plotter
+
+def _check_command_exist(arr: list, default: str):
+  for item in arr:
+     if f'-{item}' in sys.argv:
+      return item
+  return default
 
 def get_argv() -> None:
   '''
@@ -16,23 +23,17 @@ def get_argv() -> None:
   mode = constraint.MODE_DEMO
   optimize_mode = constraint.OPTIMIZE_MODE_SINGLE
   optimize_number = constraint.OPTIMIZE_NUMBER_1
-  try:
-    mode = sys.argv[1]
-    optimize_mode = sys.argv[2]
-    optimize_number = sys.argv[3]
-  except:
-    logger.log_info(f'mode:{mode} / sop,mop:{optimize_mode} / number:{optimize_number}')
 
-  if mode not in [constraint.MODE_DEMO, constraint.MODE_PROD]:
-    logger.log_error(f'mode was specified {mode}')
+  mode = _check_command_exist([constraint.MODE_DEMO, constraint.MODE_PROD], constraint.MODE_DEMO)
+  optimize_mode = _check_command_exist([constraint.OPTIMIZE_MODE_SINGLE, constraint.OPTIMIZE_MODE_MULTI], constraint.OPTIMIZE_MODE_SINGLE)
+  optimize_number = _check_command_exist([constraint.OPTIMIZE_NUMBER_1, constraint.OPTIMIZE_NUMBER_2], constraint.OPTIMIZE_NUMBER_1)
 
-  if optimize_mode not in [constraint.OPTIMIZE_MODE_SINGLE, constraint.OPTIMIZE_MODE_MULTI]:
-    logger.log_error(f'optimize_mode(sop or mop) was specified {optimize_mode}')
+  # -clearコマンドがあったときにログを削除
+  is_clear = not (_check_command_exist(["clear"],None) is None)
   
-  if optimize_number not in [constraint.OPTIMIZE_NUMBER_1, constraint.OPTIMIZE_NUMBER_2]:
-    logger.log_error(f'optimize_number(1 or 2) was specified {optimize_number}')
+  logger.log_info(f'mode:{mode} / sop,mop:{optimize_mode} / number:{optimize_number}')
 
-  return mode, optimize_mode, optimize_number
+  return mode, optimize_mode, optimize_number, is_clear
 
 def process() -> None:
   '''
@@ -41,11 +42,14 @@ def process() -> None:
   '''
   logger.log_info('process start')
 
-  mode, optimize_mode, optimize_number = get_argv()
+  mode, optimize_mode, optimize_number, is_clear = get_argv()
 
-  file_name = f"{optimize_mode}-{mode}-{optimize_number}"
-  submit.init(file_name)
-  store_map = store.init(file_name)
+  id = f"{optimize_mode}-{mode}-{optimize_number}"
+
+
+  submit.init(id, is_clear)
+  store_map = store.init(id, is_clear)
+  graph_plotter.init(id, is_clear)
 
   logger.log_info(f'app start')
   logger.log_info(f'[mode] {mode}')
@@ -67,5 +71,8 @@ def process() -> None:
 
   dt_dif = dt_end - dt_start
   logger.log_info(f'[process result]{dt_dif.days}d {dt_dif.seconds}.{dt_dif.microseconds}s')
+
+  best_score_list = submit.get_best_score_list()
+  graph_plotter.plot_best_score_list(best_score_list)
   
 __all__ = ['process']

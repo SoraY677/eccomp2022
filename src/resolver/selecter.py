@@ -25,4 +25,3 @@ def select(score_list: list, score_list_sum: int) -> int:
   
   logger.log_info(f'select index: {selected_index_list}')
   return selected_index_list[0], selected_index_list[1]
-  

@@ -128,9 +128,3 @@ def not_categorized_exec(
     solution_list = copy.copy(new_solution_list)
     logger.log_info(f'calculation {count} result:{min(score_list)}')
     score_list = []
-    
-
-
-
-
-
