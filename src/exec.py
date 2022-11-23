@@ -5,11 +5,13 @@ import resolver
 import config
 import logger
 import submit
+import store
 
 def run(
     mode : str,
     optimize_mode: str,
-    optimize_number: str
+    optimize_number: str,
+    store_map: map
   ) -> None:
   '''
   実行
@@ -34,7 +36,8 @@ def run(
       config_map['type_busy_sum'],
       config_map['type_slow_sum'],
       solution_list_max,
-      submit_max
+      submit_max,
+      store_map
     )
 
   else:
@@ -44,7 +47,8 @@ def run(
       unit_minute_max,
       agent_sum,
       solution_list_max,
-      submit_max
+      submit_max,
+      store_map
     )
 
 
@@ -58,6 +62,7 @@ def categorized_exec(
       type_slow_sum:int,
       solution_list_max: int,
       submit_max: int,
+      store_map: map
     ) -> None:
   '''
   カテゴリ分けアリの実行
@@ -71,22 +76,33 @@ def not_categorized_exec(
       unit_minute_max: int,
       agent_sum: int,
       solution_list_max: int,
-      submit_max: int
+      submit_max: int,
+      store_map: map
     ) -> None:
   '''
   カテゴリ分けナシの実行
   '''
-  solution_list = [resolver.first_generate(time_max, unit_minute_min, unit_minute_max, agent_sum) for _ in range(solution_list_max)]
+  # ストアからデータを取得 or 初期化
+  solution_list = \
+    [resolver.first_generate(time_max, unit_minute_min, unit_minute_max, agent_sum) for _ in range(solution_list_max)] if store_map is None \
+    else store_map['solution_list'] 
+  loop_start = 0 if store_map is None else store_map['count_index']
+  score_list = [] if store_map is None else store_map['score_list']
+    
   LOOP_MAX = int(submit_max / solution_list_max)
-  logger.log_info(f'loop max : {LOOP_MAX}')
-  for i in range(LOOP_MAX):
+  logger.log_info(f'loop  : {loop_start} to {LOOP_MAX}')
+  for i in range(loop_start, LOOP_MAX):
     count = i + 1
     logger.log_info(f'+++++calculation {count} +++++')
-    score_list = []
-    for solution in solution_list:
-      score = submit.run(solution)
-      score_list.append(score)
+
+    if len(score_list) == 0:
+      for solution in solution_list:
+        score = submit.run(solution)
+        score_list.append(score)
     logger.log_info(f'[score list]: {score_list}')
+
+    # 記録
+    store.save(i, solution_list, score_list)
 
     new_solution_list = []
     score_list_sum = sum(score_list)
@@ -109,9 +125,10 @@ def not_categorized_exec(
         solution = resolver.cross(selected_solution1, selected_solution2, 2, unit_minute_min, unit_minute_max, agent_sum)
         new_solution_list.append(solution)
         continue
-
     solution_list = copy.copy(new_solution_list)
     logger.log_info(f'calculation {count} result:{min(score_list)}')
+    score_list = []
+    
 
 
 

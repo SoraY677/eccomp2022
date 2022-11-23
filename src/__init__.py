@@ -7,6 +7,7 @@ import logger
 import constraint
 from exec import run
 import submit
+import store
 
 def get_argv() -> None:
   '''
@@ -44,6 +45,7 @@ def process() -> None:
 
   file_name = f"{optimize_mode}-{mode}-{optimize_number}"
   submit.init(file_name)
+  store_map = store.init(file_name)
 
   logger.log_info(f'app start')
   logger.log_info(f'[mode] {mode}')
@@ -54,7 +56,8 @@ def process() -> None:
   run(
     mode,
     optimize_mode,
-    optimize_number
+    optimize_number,
+    store_map
   )
 
   dt_end = datetime.datetime.today()
