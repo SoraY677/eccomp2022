@@ -14,23 +14,14 @@ else:
 import logger
 
 def random_generate(
-      time_max,
-      unit_minute_min,
-      unit_minute_max,
-      agent_sum
-    ):
+      time_max: int,
+      unit_minute_min: int,
+      unit_minute_max: int,
+      agent_sum: int
+    ) -> list:
   '''
   初期解生成
   ランダムに解を生成
-
-  Args:
-    - time_max (Int)
-    - unit_minute_min (Int)
-    - unit_minute_max (Int)
-    - agent_sum (Int)
-
-  Returns:
-      list<int>: 生成解
   '''
   logger.log_info('[random generate]')
   # 各時刻分×最大人数 の配列を生成

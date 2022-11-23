@@ -17,26 +17,15 @@ else:
 import logger
 
 def cross(
-    arr1,
-    arr2,
-    cross_point_num,
-    unit_minute_min,
-    unit_minute_max,
-    agent_sum
-  ):
+    arr1: list,
+    arr2: list,
+    cross_point_num: int,
+    unit_minute_min: int,
+    unit_minute_max: int,
+    agent_sum: int
+  ) -> list:
   '''
   交叉
-
-  Args:
-    - arr1 (List<Int>): 解1
-    - arr2 (List<Int>): 解2
-    - cross_point_num (Int): 交叉点数
-    - unit_minute_min (Int)
-    - unit_minute_max (Int)
-    - agent_sum (Int)
-
-  Returns:
-    List<Int>: 交叉後の解
   '''
   logger.log_info('cross')
   logger.log_info(f'arr1: {arr1}')
@@ -64,24 +53,14 @@ def cross(
   return result
 
 def union(
-    arr1,
-    arr2,
-    unit_minute_min,
-    unit_minute_max,
-    agent_sum
-  ):
+    arr1: list,
+    arr2: list,
+    unit_minute_min: int,
+    unit_minute_max: int,
+    agent_sum: int
+  ) -> list:
   '''
   合成
-
-  Args:
-    - arr1 (List<Int>): 解1
-    - arr2 (List<Int>): 解2
-    - unit_minute_min (Int)
-    - unit_minute_max (Int)
-    - agent_sum (Int)
-
-  Returns:
-      _type_: _description_
   '''
   logger.log_info('union')
   logger.log_info(f'arr1: {arr1}')
@@ -107,17 +86,13 @@ def union(
     logger.log_error('agent size check fail!')
   return result
 
-def _cross_2solutions(arr1, arr2, cross_point_num):
+def _cross_2solutions(
+    arr1: list,
+    arr2: list,
+    cross_point_num: int
+  ) -> list:
   '''
-  実際に交叉を行う
-
-  Args:
-    - arr1 (List<Int>): 解1
-    - arr2 (List<Int>): 解2
-    - cross_point_num (Int): 交叉点数
-
-  Returns:
-    List<Int>: 解
+  実際の交叉部
   '''
   is_selected_point_arr = [False for _ in range(len(arr1) - 1)]
   for _ in range(cross_point_num):
@@ -137,31 +112,23 @@ def _cross_2solutions(arr1, arr2, cross_point_num):
 
   return result
 
-def _union_2solutions(arr1, arr2):
+def _union_2solutions(
+    arr1: int,
+    arr2: int
+  ) -> list:
   '''
-  合成を実際に行う場所
-
-  Args:
-    - arr1 (List<Int>): 解1
-    - arr2 (List<Int>): 解2
-
-  Returns:
-    List<Int>: 解
+  実際の合成部
   '''
   new_arr = []
   for i in range(len(arr1)):
     new_arr.append(arr1[i] + arr2[i])
   return new_arr
 
-def _approximate_function(arr):
+def _approximate_function(
+   arr: list
+  ) -> function:
   '''
   近似関数を求める
-
-  Args:
-    - arr: 解などの配列
-
-  Returns:
-    function: 近似関数
   '''
   t = np.arange(len(arr))
   x = np.array(arr)
@@ -169,23 +136,14 @@ def _approximate_function(arr):
   return func
 
 def _create_new_solution(
-    origin_result,
-    unit_second_min,
-    unit_second_max,
-    agent_sum,
-  ):
+    origin_result: list,
+    unit_second_min: int,
+    unit_second_max: int,
+    agent_sum: int,
+  ) -> list:
   '''
   交叉・合成など行った結果から
-  新規に解を生成する
-
-  Args:
-    - origin_result (List<Int>): 合成・交叉など行った後の分布
-    - unit_minute_min (Int)
-    - unit_minute_max (Int)
-    - agent_sum (Int)
-
-  Returns:
-    List<Int>: 解
+  新規に解を生成
   '''
   approximate_function = _approximate_function(origin_result)
   origin_result_arr = [approximate_function(i) for i in range(len(origin_result))]

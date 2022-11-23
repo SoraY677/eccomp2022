@@ -11,7 +11,7 @@ project_dir = current_dir[:current_dir.find(PROJECT_NAME)+len(PROJECT_NAME)]
 
 _config = {}
 
-def _read_config():
+def _read_config() -> None:
   '''
   設定読み込み
   '''
@@ -21,7 +21,7 @@ def _read_config():
     logger.log_info(f'config.yml: {_config}')
 _read_config()
 
-def get_config():
+def get_config() -> None:
   '''
   設定変数を返す
 

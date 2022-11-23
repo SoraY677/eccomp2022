@@ -12,6 +12,6 @@ else:
   sys.path.append(os.path.join(project_dir, 'src'))
 import logger
 
-def select(solution_score_list):
+def select(solution_score_list: list) -> int:
   logger.log_info('[select]')
   

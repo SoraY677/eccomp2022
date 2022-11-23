@@ -19,14 +19,16 @@ ch.setLevel(logging.INFO)
 formatter = logging.Formatter('[%(levelname)s] %(asctime)s | %(message)s')
 ch.setFormatter(formatter)
 
-def log_debug(message):
+def log_debug(message:str) -> None:
   logging.debug(message)
 
-def log_info(message):
+def log_info(message:str) -> None:
   logging.info(message)
 
-def log_warn(message):
+def log_warn(message:str) -> None:
   logging.warn(message)
 
-def log_error(message):
+def log_error(message:str) -> None:
   logging.error(message)
+  print(f'[error] {message}')
+  exit(-1)
