@@ -30,8 +30,7 @@ def get_argv() -> None:
 
   # -clearコマンドがあったときにログを削除
   is_clear = not (_check_command_exist(["clear"],None) is None)
-  
-  logger.log_info(f'mode:{mode} / sop,mop:{optimize_mode} / number:{optimize_number}')
+
 
   return mode, optimize_mode, optimize_number, is_clear
 
@@ -40,13 +39,14 @@ def process() -> None:
   処理実施
   + 処理時間計測
   '''
-  logger.log_info('process start')
-
   mode, optimize_mode, optimize_number, is_clear = get_argv()
-
+  
   id = f"{optimize_mode}-{mode}-{optimize_number}"
 
+  logger.init(id, is_clear)
+  logger.log_info('process start')
 
+  logger.log_info(f'mode:{mode} / sop,mop:{optimize_mode} / number:{optimize_number}')
   submit.init(id, is_clear)
   store_map = store.init(id, is_clear)
   graph_plotter.init(id, is_clear)
