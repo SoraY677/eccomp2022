@@ -149,7 +149,7 @@ def not_categorized_exec(
       selected_solution1 = solution_list[select_i1]
       selected_solution2 = solution_list[select_i2]
       # 突然変異
-      if random.random() < 0.1:
+      if random.random() < 0.2:
         solution = resolver.mutate(selected_solution1, unit_minute_min, unit_minute_max, agent_sum)
         graph_path_list.append('')
         new_solution_list.append(solution)

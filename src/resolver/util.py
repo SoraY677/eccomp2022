@@ -25,15 +25,17 @@ def _approximate_function(
   '''
   result = []
   arr_len = len(arr)
-  dif_list = (-3,-2, -1, 0, 1, 2, 3)
+  dif_list = (-3, -2, -1, 0, 1, 2, 3)
   for i in range(arr_len):
+    effective_dif_count = 0
     item = 0
     for dif in dif_list:
       index = i + dif 
       if index < 0 or index > arr_len - 1 :
         continue
       item += arr[i+dif]
-    result.append(item / len(dif_list))
+      effective_dif_count += 1
+    result.append(item / effective_dif_count)
   graph_name = graph_plotter.plot_person_per_time_and_approximate_function(np.arange(arr_len), np.array(arr), result)
   return result, graph_name
 

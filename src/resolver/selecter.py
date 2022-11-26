@@ -19,8 +19,8 @@ def select(score_list: list, score_list_sum: int) -> int:
   2個体選択
   '''
   selected_weights = [score_list_sum - score for score in score_list]
-  logger.log_info(f'selected weight: {selected_weights}')
+  logger.log_debug(f'selected weight: {selected_weights}')
   selected_index_list = random.choices(list(range(len(score_list))), k=2, weights=selected_weights)
   
-  logger.log_info(f'select index: {selected_index_list}')
+  logger.log_debug(f'select index: {selected_index_list}')
   return selected_index_list[0], selected_index_list[1]
