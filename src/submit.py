@@ -56,7 +56,8 @@ def submit_server(solution, endpoint, is_practice):
 def run(
   solution,
   endpoint,
-  is_practice
+  is_practice,
+  graph_path
 ):
   '''
   解提出
@@ -65,6 +66,7 @@ def run(
   global filepath
   logger.log_info(f'[solution-submit] {solution}')
   score = submit_server(solution, endpoint, is_practice)
+  logger.log_info(f'graph:{graph_path}')
   logger.log_info(f'[solution score] {score}')
 
   # ベストスコア更新

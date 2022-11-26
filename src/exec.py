@@ -112,18 +112,22 @@ def not_categorized_exec(
     else store_map['solution_list'] 
   loop_start = 0 if store_map is None else store_map['count_index']
   score_list = [] if store_map is None else store_map['score_list']
+  graph_path_list = [''] * solution_list_max
     
   LOOP_MAX = int(submit_max / solution_list_max)
   logger.log_info(f'loop  : {loop_start} to {LOOP_MAX}')
   for i in range(loop_start, LOOP_MAX):
+    
     count = i + 1
     logger.log_info(f'+++++calculation {count} +++++')
 
     if len(score_list) == 0:
-      for solution in solution_list:
-        score = submit.run(solution, endpoint, is_practice)
+      for i in range(len(solution_list)):
+        solution = solution_list[i]
+        score = submit.run(solution, endpoint, is_practice, graph_path_list[i])
         score_list.append(score)
     logger.log_info(f'[score list]: {score_list}')
+    graph_path_list = []
 
     # 記録
     store.save(i, solution_list, score_list)
@@ -137,18 +141,23 @@ def not_categorized_exec(
       # 突然変異
       if random.random() < 0.15:
         solution = resolver.mutate(time_max, unit_minute_min, unit_minute_max, agent_sum)
+        graph_path_list.append('')
         new_solution_list.append(solution)
         continue
       # 合成 = 選ばれた解が同じなら
       if select_i1 == select_i2:
-        solution = resolver.union(selected_solution1, selected_solution2, unit_minute_min, unit_minute_max, agent_sum)
+        solution, graph_path = resolver.union(selected_solution1, selected_solution2, unit_minute_min, unit_minute_max, agent_sum)
+        graph_path_list.append(graph_path)
         new_solution_list.append(solution)
         continue
       # 交叉 = 選ばれた解が異なる
       else:
-        solution = resolver.cross(selected_solution1, selected_solution2, 2, unit_minute_min, unit_minute_max, agent_sum)
+        solution, graph_path = resolver.cross(selected_solution1, selected_solution2, 2, unit_minute_min, unit_minute_max, agent_sum)
+        graph_path_list.append(graph_path)
         new_solution_list.append(solution)
         continue
     solution_list = copy.copy(new_solution_list)
     logger.log_info(f'calculation {count} result:{min(score_list)}')
     score_list = []
+
+  return graph_path

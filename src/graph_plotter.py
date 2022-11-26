@@ -37,7 +37,7 @@ def plot_person_per_time_and_approximate_function(
   ax2 = ax1.twinx()
   ax1.bar(t, x, color='gray', alpha=0.5)
   ax2.plot(t, func(t), linewidth=3, alpha=0.5)
-  save_file(plt)
+  return save_file(plt)
 
 def plot_best_score_list(best_score_list):
   t = np.arange(0, len(best_score_list), 1)
