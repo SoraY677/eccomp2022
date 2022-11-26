@@ -128,7 +128,6 @@ def not_categorized_exec(
     for solution_i in range(len(solution_list)):
       solution = new_solution_list[solution_i]
       score = submit.run(solution, endpoint, is_practice, graph_path_list[solution_i])
-      print(score)
       best_solution_map_list.append({
         'score': score,
         'solution': solution
@@ -136,8 +135,6 @@ def not_categorized_exec(
     score_solution_map_list_sorted = sorted(best_solution_map_list ,key=lambda x:x['score'])
     solution_list = [ score_solution_map_list_sorted[i]['solution'] for i in range(solution_list_max)]
     score_list    = [ score_solution_map_list_sorted[i]['score'] for i in range(solution_list_max)]
-
-    print(score_list)
 
     logger.log_debug(f'[score list]: {score_list}')
     graph_path_list = []
@@ -152,18 +149,18 @@ def not_categorized_exec(
       selected_solution1 = solution_list[select_i1]
       selected_solution2 = solution_list[select_i2]
       # 突然変異
-      if random.random() < 0.15:
-        solution = resolver.mutate(time_max, unit_minute_min, unit_minute_max, agent_sum)
+      if random.random() < 0.1:
+        solution = resolver.mutate(selected_solution1, unit_minute_min, unit_minute_max, agent_sum)
         graph_path_list.append('')
         new_solution_list.append(solution)
         continue
-      # 合成 = 選ばれた解が同じなら
-      if select_i1 == select_i2:
+      # 合成
+      if random.random() < 0.5:
         solution, graph_path = resolver.union(selected_solution1, selected_solution2, unit_minute_min, unit_minute_max, agent_sum)
         graph_path_list.append(graph_path)
         new_solution_list.append(solution)
         continue
-      # 交叉 = 選ばれた解が異なる
+      # 交叉
       else:
         solution, graph_path = resolver.cross(selected_solution1, selected_solution2, 2, unit_minute_min, unit_minute_max, agent_sum)
         graph_path_list.append(graph_path)

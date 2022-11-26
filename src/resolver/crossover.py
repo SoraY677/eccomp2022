@@ -16,7 +16,8 @@ else:
   src_dir = os.path.join(project_dir, 'src')
   if src_dir not in sys.path: sys.path.append(src_dir)
 import logger
-import graph_plotter
+
+import util
 
 def cross(
     arr1: list,
@@ -35,7 +36,7 @@ def cross(
   if len(arr1) != len(arr2):
     logger.log_error('cross over arr length not correct!')
   cross_origin_result = _cross_2solutions(arr1, arr2, cross_point_num)
-  result, graph_path = _create_new_solution(cross_origin_result, unit_minute_min, unit_minute_max, agent_sum)
+  result, graph_path = util.create_new_solution(cross_origin_result, unit_minute_min, unit_minute_max, agent_sum)
 
   logger.log_info(f'cross result: {result}')
 
@@ -64,13 +65,13 @@ def union(
   '''
   合成
   '''
-  logger.log_info('union')
+  logger.log_info('[union]')
   logger.log_info(f'arr1: {arr1}')
   logger.log_info(f'arr2: {arr2}')
   if len(arr1) != len(arr2):
     logger.log_error('cross over arr length not correct!')
   union_origin_result = _union_2solutions(arr1, arr2)
-  result, graph_path = _create_new_solution(union_origin_result, unit_minute_min, unit_minute_max, agent_sum)
+  result, graph_path = util.create_new_solution(union_origin_result, unit_minute_min, unit_minute_max, agent_sum)
 
   logger.log_info(f'union result: {result}')
 
@@ -123,43 +124,6 @@ def _union_2solutions(
   '''
   new_arr = []
   for i in range(len(arr1)):
-    new_arr.append(arr1[i] + arr2[i])
+    new_arr.append((arr1[i] + arr2[i]) ** 2 )
   return new_arr
 
-def _approximate_function(
-   arr: list
-  ) -> any:
-  '''
-  近似関数を求める
-  '''
-  t = np.arange(len(arr))
-  x = np.array(arr)
-  func = interp1d(t,x,kind='cubic')
-  
-  graph_name = graph_plotter.plot_person_per_time_and_approximate_function(t, x, func)
-  return func, graph_name
-
-def _create_new_solution(
-    origin_result: list,
-    unit_minute_min: int,
-    unit_minute_max: int,
-    agent_sum: int,
-  ) -> list:
-  '''
-  交叉・合成など行った結果から
-  新規に解を生成
-  '''
-  approximate_function, graph_name = _approximate_function(origin_result)
-  origin_result_arr = [approximate_function(i) for i in range(len(origin_result))]
-  origin_result_sum = sum(origin_result_arr)
-  origin_result_len = len(origin_result_arr)
-
-  select_list = [0 for _ in range(origin_result_len)]
-  weights = [item / origin_result_sum for item in origin_result_arr]
-  for _ in range(agent_sum):
-    selected_index = random.choices(list(range(origin_result_len)), k=1, weights=weights)[0]
-    select_list[selected_index] += 1
-    if select_list[selected_index] == (unit_minute_max - unit_minute_min):
-      weights[selected_index] = 0
-
-  return select_list, graph_name

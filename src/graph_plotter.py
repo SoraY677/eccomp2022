@@ -36,7 +36,7 @@ def plot_person_per_time_and_approximate_function(
   _, ax1 = plt.subplots(figsize=(17, 4))
   ax2 = ax1.twinx()
   ax1.bar(t, x, color='gray', alpha=0.5)
-  ax2.plot(t, func(t), linewidth=3, alpha=0.5)
+  ax2.plot(t, func, linewidth=3, alpha=0.5)
   return save_file(plt)
 
 def plot_best_score_list(best_score_list):
