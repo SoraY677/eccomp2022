@@ -1,3 +1,4 @@
+MODE_PRACTICE = "practice"
 MODE_DEMO = "demo"
 MODE_PROD = "prod"
 

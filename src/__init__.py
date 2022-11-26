@@ -20,11 +20,11 @@ def get_argv() -> None:
   '''
   コマンドライン引数を取得
   '''
-  mode = constraint.MODE_DEMO
+  mode = constraint.MODE_PRACTICE
   optimize_mode = constraint.OPTIMIZE_MODE_SINGLE
   optimize_number = constraint.OPTIMIZE_NUMBER_1
 
-  mode = _check_command_exist([constraint.MODE_DEMO, constraint.MODE_PROD], constraint.MODE_DEMO)
+  mode = _check_command_exist([constraint.MODE_PRACTICE, constraint.MODE_DEMO, constraint.MODE_PROD], constraint.MODE_PRACTICE)
   optimize_mode = _check_command_exist([constraint.OPTIMIZE_MODE_SINGLE, constraint.OPTIMIZE_MODE_MULTI], constraint.OPTIMIZE_MODE_SINGLE)
   optimize_number = _check_command_exist([constraint.OPTIMIZE_NUMBER_1, constraint.OPTIMIZE_NUMBER_2], constraint.OPTIMIZE_NUMBER_1)
 

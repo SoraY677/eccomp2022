@@ -91,11 +91,9 @@ $ conda activate eccomp2022
 # pythonの必要モジュールインストール
 $ pip install -r requirements.txt
 
-# demoモードで起動
-$ python main.py demo
-
-# 本番モードで起動
-$ python main.py prod
+# システム起動 (練習モード)
+# 実行時の詳しいオプション設定は後述
+$ python main.py
 
 # pythonモジュールを書き出し
 $ pip freeze > requirements.txt
@@ -106,6 +104,26 @@ $ conda deactivate
 # Anacondaの環境を削除
 $ conda remove -n eccomp2022 --all
 ```
+
+### 実行時のオプション
+
+|	OptionName	|	Option			|	detail 																					|
+|	:--:				|	:---:				|	:----																						|
+|	submit-mode	| `-practice` |	submit using mock(Not send solution to server)	|
+| 		 				| `-demo`			| submit demo  																		|
+|							| `-prod`			| submit production mode													|
+|	sop or mop	|	`-sop`			| single purpose problem													|
+|							|	`-mop`			| multi  purpose problem													|
+| quest-num		|	`-1`				| question 1																			|
+|							| `-2`				| question 2																			|
+|	is-clear		| `-clear`		| log clear																				|
+
+#### default
+
+- `submit-mode`	: practice
+- `sop or mop`	: sop
+- `quest-num` 	: 1
+- `is-clear`		: clear file
 
 ### ディレクトリ構成
 

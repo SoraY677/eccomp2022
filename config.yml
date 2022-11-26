@@ -1,5 +1,25 @@
 measureSecond: 300
 sop:
+  practice:
+    1:
+      time_max: 300
+      unit_minute_min: 0
+      unit_minute_max: 45
+      agent_sum: 4500
+      is_type_categorize: false
+      solution_list_max: 10
+      submit_max: 100
+    2:
+      time_max: 300
+      agent_sum: 4500
+      unit_minute_min: 0
+      unit_minute_max: 45
+      is_type_categorize: true
+      type_guided_sum: 300
+      type_busy_sum: 300
+      type_slow_sum: 300
+      solution_list_max: 10
+      submit_max: 1000
   demo:
     1:
       time_max: 300
