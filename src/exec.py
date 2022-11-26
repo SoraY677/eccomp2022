@@ -6,12 +6,15 @@ import config
 import logger
 import submit
 import store
+import constraint
+import mock_server
 
 def run(
     mode : str,
     optimize_mode: str,
     optimize_number: str,
-    store_map: map
+    store_map: map,
+    is_practice: bool
   ) -> None:
   '''
   実行
@@ -25,6 +28,19 @@ def run(
   agent_sum = config_map['agent_sum']
   solution_list_max = config_map['solution_list_max']
   submit_max = config_map['submit_max']
+  endpoint = ''
+  try:
+    endpoint = config_map['endpoint'] 
+  except:
+    pass
+
+  if is_practice:
+    mock_server.init(
+      time_max,
+      unit_minute_min,
+      unit_minute_max,
+      agent_sum
+    )
 
   if config_map['is_type_categorize']:
     categorized_exec(
@@ -37,7 +53,9 @@ def run(
       config_map['type_slow_sum'],
       solution_list_max,
       submit_max,
-      store_map
+      store_map,
+      endpoint,
+      is_practice
     )
 
   else:
@@ -48,7 +66,9 @@ def run(
       agent_sum,
       solution_list_max,
       submit_max,
-      store_map
+      store_map,
+      endpoint,
+      is_practice
     )
 
 
@@ -62,7 +82,9 @@ def categorized_exec(
       type_slow_sum:int,
       solution_list_max: int,
       submit_max: int,
-      store_map: map
+      store_map: map,
+      endpoint: str,
+      is_practice: bool
     ) -> None:
   '''
   カテゴリ分けアリの実行
@@ -77,7 +99,9 @@ def not_categorized_exec(
       agent_sum: int,
       solution_list_max: int,
       submit_max: int,
-      store_map: map
+      store_map: map,
+      endpoint: str,
+      is_practice: bool
     ) -> None:
   '''
   カテゴリ分けナシの実行
@@ -97,7 +121,7 @@ def not_categorized_exec(
 
     if len(score_list) == 0:
       for solution in solution_list:
-        score = submit.run(solution)
+        score = submit.run(solution, endpoint, is_practice)
         score_list.append(score)
     logger.log_info(f'[score list]: {score_list}')
 

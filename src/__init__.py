@@ -10,6 +10,8 @@ import submit
 import store
 import graph_plotter
 
+_is_practice = False
+
 def _check_command_exist(arr: list, default: str):
   for item in arr:
      if f'-{item}' in sys.argv:
@@ -31,6 +33,8 @@ def get_argv() -> None:
   # -clearコマンドがあったときにログを削除
   is_clear = not (_check_command_exist(["clear"],None) is None)
 
+  global _is_practice
+  _is_practice = mode == constraint.MODE_PRACTICE
 
   return mode, optimize_mode, optimize_number, is_clear
 
@@ -57,11 +61,13 @@ def process() -> None:
   dt_start =  datetime.datetime.today()
   logger.log_info(f'[start]{dt_start.year}-{dt_start.month}-{dt_start.day} {dt_start.hour}:{dt_start.minute}:{dt_start.second}')
 
+  global _is_practice
   run(
     mode,
     optimize_mode,
     optimize_number,
-    store_map
+    store_map,
+    _is_practice
   )
 
   dt_end = datetime.datetime.today()

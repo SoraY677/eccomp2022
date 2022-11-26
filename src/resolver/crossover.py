@@ -141,8 +141,8 @@ def _approximate_function(
 
 def _create_new_solution(
     origin_result: list,
-    unit_second_min: int,
-    unit_second_max: int,
+    unit_minute_min: int,
+    unit_minute_max: int,
     agent_sum: int,
   ) -> list:
   '''
@@ -159,7 +159,7 @@ def _create_new_solution(
   for _ in range(agent_sum):
     selected_index = random.choices(list(range(origin_result_len)), k=1, weights=weights)[0]
     select_list[selected_index] += 1
-    if select_list[selected_index] == (unit_second_max - unit_second_min):
+    if select_list[selected_index] == (unit_minute_max - unit_minute_min):
       weights[selected_index] = 0
 
   return select_list

@@ -33,7 +33,6 @@ def plot_person_per_time_and_approximate_function(
     x, 
     func
   ):
-  
   _, ax1 = plt.subplots(figsize=(17, 4))
   ax2 = ax1.twinx()
   ax1.bar(t, x, color='gray', alpha=0.5)
@@ -44,6 +43,22 @@ def plot_best_score_list(best_score_list):
   t = np.arange(0, len(best_score_list), 1)
   ft = np.array(best_score_list)
   plt.plot(t, ft, linewidth=2.0)
+  save_file(plt)
+
+def plot_practice_gauss(
+    x, 
+    f_list, 
+    multi_gauss_result,
+    answer
+  ):
+  _, ax1 = plt.subplots(figsize=(17, 4))
+  ax1.grid()
+  for f in f_list:
+    ax1.plot(x, f)
+  ax1.plot(x, multi_gauss_result, color="red")
+
+  ax2 = ax1.twinx()
+  ax2.bar(x, answer, color='gray', alpha=0.5)
   save_file(plt)
 
 def save_file(plt):
