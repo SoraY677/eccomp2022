@@ -29,7 +29,7 @@ def init(
   _dt =  datetime.datetime.today()
   _time = f'{_dt.year}-{_dt.month}-{_dt.day}-{_dt.hour}-{_dt.minute}-{_dt.second}'
   filehandler = logging.FileHandler(os.path.join(save_dir, _time + '.log'), 'a')
-  formatter = logging.Formatter('%(asctime)-15s [%(levelname)s] %(filename)s/L%(lineno)d : %(message)s')
+  formatter = logging.Formatter('[%(levelname)s] %(asctime)-15s : %(message)s')
   filehandler.setFormatter(formatter)
   _logger.addHandler(filehandler)
   _logger.setLevel(logging.INFO)
