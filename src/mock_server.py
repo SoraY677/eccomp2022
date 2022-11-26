@@ -18,10 +18,8 @@ def generate_answer(
   unit_minute_max,
   agent_sum
 ):
-  global _mock_result
   weights_copy = copy.copy(weights)
   select_list = [0] * time_max
-  print(weights_copy)
   for _ in range(agent_sum):
     selected_index = random.choices(list(range(time_max)), k=1, weights=weights_copy)[0]
     select_list[selected_index] += 1
@@ -44,19 +42,20 @@ def generate_answer(
 
   return select_list
 
-def calc_least_squares_error(test_solution, answer_solution):
+def calc_least_squares_error(test_solution):
+  global _mock_result
+  answer_solution = _mock_result
   test_solution_length = len(test_solution)
   answer_solution_length = len(answer_solution)
-  logger.log_info(f'length check....: [length]{test_solution_length} : [sum]{sum(answer_solution_length)}')
-  if sum(test_solution_length) == answer_solution_length:
+  logger.log_info(f'length check....: [length]{test_solution_length} : [ans_length]{answer_solution_length}')
+  if test_solution_length == answer_solution_length:
     logger.log_info('no problem!!')
   else:
     logger.log_error('length check fail!')
 
   result = 0.0
-  for i in test_solution_length:
+  for i in range(test_solution_length):
     result += math.sqrt((test_solution[i] - answer_solution[i]) ** 2)
-
   return result
 
 def init(
@@ -73,16 +72,16 @@ def init(
     _gauss_function_result_list.append(gauss_function_result)
     multi_gauss_result = [x + y for (x, y) in zip(multi_gauss_result, gauss_function_result)]
 
-  answer = generate_answer(
+  global _mock_result
+  _mock_result = generate_answer(
     multi_gauss_result,
     time_max, 
     unit_minute_min,
     unit_minute_max,
     agent_sum
   )
-  graph_plotter.plot_practice_gauss(x, _gauss_function_result_list, np.array(multi_gauss_result), np.array(answer))
+  graph_plotter.plot_practice_gauss(x, _gauss_function_result_list, np.array(multi_gauss_result), np.array(_mock_result))
 
 
 def response(solution):
-  
-  return random.random()
+  return calc_least_squares_error(solution)

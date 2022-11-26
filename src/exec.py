@@ -1,5 +1,6 @@
 import random
 import copy
+import sys
 
 import resolver
 import config
@@ -110,22 +111,27 @@ def not_categorized_exec(
   solution_list = \
     [resolver.first_generate(time_max, unit_minute_min, unit_minute_max, agent_sum) for _ in range(solution_list_max)] if store_map is None \
     else store_map['solution_list'] 
+  new_solution_list = copy.copy(solution_list)
   loop_start = 0 if store_map is None else store_map['count_index']
-  score_list = [] if store_map is None else store_map['score_list']
+  score_list = [ sys.maxsize ] * solution_list_max if store_map is None else store_map['score_list']
   graph_path_list = [''] * solution_list_max
     
   LOOP_MAX = int(submit_max / solution_list_max)
   logger.log_info(f'loop  : {loop_start} to {LOOP_MAX}')
   for i in range(loop_start, LOOP_MAX):
-    
     count = i + 1
     logger.log_info(f'+++++calculation {count} +++++')
 
-    if len(score_list) == 0:
-      for i in range(len(solution_list)):
-        solution = solution_list[i]
-        score = submit.run(solution, endpoint, is_practice, graph_path_list[i])
-        score_list.append(score)
+    for i in range(len(solution_list)):
+      solution = solution_list[i]
+      score = submit.run(solution, endpoint, is_practice, graph_path_list[i])
+      for score_i in range(solution_list_max):
+        if score_list[score_i] > score:
+          score_list.insert(score_i, score)
+          solution_list.insert(score_i, new_solution_list[score_i])
+    solution_list = copy.copy(solution_list[:solution_list_max])
+    score_list = copy.copy(score_list[:solution_list_max])
+
     logger.log_info(f'[score list]: {score_list}')
     graph_path_list = []
 
@@ -158,6 +164,5 @@ def not_categorized_exec(
         continue
     solution_list = copy.copy(new_solution_list)
     logger.log_info(f'calculation {count} result:{min(score_list)}')
-    score_list = []
 
   return graph_path
