@@ -3,6 +3,7 @@ import random
 import graph_plotter
 import logger
 import math
+import copy
 
 _gauss_function_result_list = []
 _mock_result = []
@@ -18,12 +19,14 @@ def generate_answer(
   agent_sum
 ):
   global _mock_result
+  weights_copy = copy.copy(weights)
   select_list = [0] * time_max
+  print(weights_copy)
   for _ in range(agent_sum):
-    selected_index = random.choices(list(range(time_max)), k=1, weights=weights)[0]
+    selected_index = random.choices(list(range(time_max)), k=1, weights=weights_copy)[0]
     select_list[selected_index] += 1
     if select_list[selected_index] == (unit_minute_max - unit_minute_min):
-      weights[selected_index] = 0
+      weights_copy[selected_index] = 0
   
   logger.log_info(select_list)
   logger.log_info(f'agent length check....: [length]{agent_sum} : [sum]{sum(select_list)}')
@@ -32,7 +35,7 @@ def generate_answer(
   else:
     logger.log_error('agent length check fail!')
 
-  isSizePass = max(select_list) < ( unit_minute_max - unit_minute_min )
+  isSizePass = max(select_list) <= ( unit_minute_max - unit_minute_min )
   logger.log_info(f'agent size over check....: {max(select_list)}')
   if isSizePass:
     logger.log_info('no problem!!')
@@ -56,9 +59,6 @@ def calc_least_squares_error(test_solution, answer_solution):
 
   return result
 
-
-
-
 def init(
     time_max, 
     unit_minute_min,
@@ -69,7 +69,7 @@ def init(
   x = np.arange(0, time_max, 1)
   multi_gauss_result = [0] * x
   for _ in range(1):
-    gauss_function_result = gauss(x, a=0.1, mu=time_max/2, sigma=100)
+    gauss_function_result = gauss(x, a=0.1, mu=time_max/2, sigma=50)
     _gauss_function_result_list.append(gauss_function_result)
     multi_gauss_result = [x + y for (x, y) in zip(multi_gauss_result, gauss_function_result)]
 

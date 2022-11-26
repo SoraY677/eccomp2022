@@ -45,7 +45,7 @@ def random_generate(
   else:
     logger.log_error('agent length check fail!')
 
-  isSizePass = max(count_list) < ( unit_minute_max - unit_minute_min )
+  isSizePass = max(count_list) <= ( unit_minute_max - unit_minute_min )
   logger.log_info(f'agent size over check....: {max(count_list)}')
   if isSizePass:
     logger.log_info('no problem!!')
