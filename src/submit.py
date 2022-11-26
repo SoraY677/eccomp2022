@@ -80,7 +80,6 @@ def run(
   with open(filepath, 'w') as f:
       score_text = "\n".join([str(best_score) for best_score in best_score_list])
       f.write(f'{score_text}')
-
   return score
 
 def get_best_score_list():

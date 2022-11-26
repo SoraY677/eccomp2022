@@ -26,17 +26,17 @@ def generate_answer(
     if select_list[selected_index] == (unit_minute_max - unit_minute_min):
       weights_copy[selected_index] = 0
   
-  logger.log_info(select_list)
-  logger.log_info(f'agent length check....: [length]{agent_sum} : [sum]{sum(select_list)}')
+  logger.log_debug(select_list)
+  logger.log_debug(f'agent length check....: [length]{agent_sum} : [sum]{sum(select_list)}')
   if sum(select_list) == agent_sum:
-    logger.log_info('no problem!!')
+    logger.log_debug('no problem!!')
   else:
     logger.log_error('agent length check fail!')
 
   isSizePass = max(select_list) <= ( unit_minute_max - unit_minute_min )
-  logger.log_info(f'agent size over check....: {max(select_list)}')
+  logger.log_debug(f'agent size over check....: {max(select_list)}')
   if isSizePass:
-    logger.log_info('no problem!!')
+    logger.log_debug('no problem!!')
   else:
     logger.log_error('agent size check fail!')
 
@@ -44,12 +44,12 @@ def generate_answer(
 
 def calc_least_squares_error(test_solution):
   global _mock_result
-  answer_solution = _mock_result
+  answer_solution = copy.copy(_mock_result)
   test_solution_length = len(test_solution)
   answer_solution_length = len(answer_solution)
-  logger.log_info(f'length check....: [length]{test_solution_length} : [ans_length]{answer_solution_length}')
+  logger.log_debug(f'length check....: [length]{test_solution_length} : [ans_length]{answer_solution_length}')
   if test_solution_length == answer_solution_length:
-    logger.log_info('no problem!!')
+    logger.log_debug('no problem!!')
   else:
     logger.log_error('length check fail!')
 

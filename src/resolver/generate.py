@@ -37,18 +37,18 @@ def random_generate(
   count_list = [0 for _ in range(time_max)]
   for i in range(time_max):
     count_list[i] = select_list.count(i)
-
   logger.log_info(count_list)
-  logger.log_info(f'agent length check....: [length]{agent_sum} : [sum]{sum(count_list)}')
+  
+  logger.log_debug(f'agent length check....: [length]{agent_sum} : [sum]{sum(count_list)}')
   if sum(count_list) == agent_sum:
-    logger.log_info('no problem!!')
+    logger.log_debug('no problem!!')
   else:
     logger.log_error('agent length check fail!')
 
   isSizePass = max(count_list) <= ( unit_minute_max - unit_minute_min )
-  logger.log_info(f'agent size over check....: {max(count_list)}')
+  logger.log_debug(f'agent size over check....: {max(count_list)}')
   if isSizePass:
-    logger.log_info('no problem!!')
+    logger.log_debug('no problem!!')
   else:
     logger.log_error('agent size check fail!')
 

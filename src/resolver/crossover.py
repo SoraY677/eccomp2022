@@ -39,16 +39,16 @@ def cross(
 
   logger.log_info(f'cross result: {result}')
 
-  logger.log_info(f'agent length check....: [length]{agent_sum} : [sum]{sum(result)}')
+  logger.log_debug(f'agent length check....: [length]{agent_sum} : [sum]{sum(result)}')
   if sum(result) == agent_sum:
-    logger.log_info('no problem!!')
+    logger.log_debug('no problem!!')
   else:
     logger.log_error('agent length check fail!')
 
   isSizePass = max(result) <= ( unit_minute_max - unit_minute_min )
-  logger.log_info(f'agent size over check....: {max(result)}')
+  logger.log_debug(f'agent size over check....: {max(result)}')
   if isSizePass:
-    logger.log_info('no problem!!')
+    logger.log_debug('no problem!!')
   else:
     logger.log_error('agent size check fail!')
 
@@ -74,16 +74,16 @@ def union(
 
   logger.log_info(f'union result: {result}')
 
-  logger.log_info(f'agent length check....: [length]{agent_sum} : [sum]{sum(result)}')
+  logger.log_debug(f'agent length check....: [length]{agent_sum} : [sum]{sum(result)}')
   if sum(result) == agent_sum:
-    logger.log_info('no problem!!')
+    logger.log_debug('no problem!!')
   else:
     logger.log_error('agent length check fail!')
 
   isSizePass = max(result) <= ( unit_minute_max - unit_minute_min )
-  logger.log_info(f'agent size over check....: {max(result)}')
+  logger.log_debug(f'agent size over check....: {max(result)}')
   if isSizePass:
-    logger.log_info('no problem!!')
+    logger.log_debug('no problem!!')
   else:
     logger.log_error('agent size check fail!')
   return result, graph_path

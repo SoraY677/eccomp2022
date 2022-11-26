@@ -117,22 +117,29 @@ def not_categorized_exec(
   graph_path_list = [''] * solution_list_max
     
   LOOP_MAX = int(submit_max / solution_list_max)
-  logger.log_info(f'loop  : {loop_start} to {LOOP_MAX}')
+  logger.log_debug(f'loop  : {loop_start} to {LOOP_MAX}')
   for i in range(loop_start, LOOP_MAX):
     count = i + 1
     logger.log_info(f'+++++calculation {count} +++++')
+    best_solution_map_list = [{
+        'score': score_list[i],
+        'solution': solution_list[i]
+      } for i in range(solution_list_max)]
+    for solution_i in range(len(solution_list)):
+      solution = new_solution_list[solution_i]
+      score = submit.run(solution, endpoint, is_practice, graph_path_list[solution_i])
+      print(score)
+      best_solution_map_list.append({
+        'score': score,
+        'solution': solution
+      })
+    score_solution_map_list_sorted = sorted(best_solution_map_list ,key=lambda x:x['score'])
+    solution_list = [ score_solution_map_list_sorted[i]['solution'] for i in range(solution_list_max)]
+    score_list    = [ score_solution_map_list_sorted[i]['score'] for i in range(solution_list_max)]
 
-    for i in range(len(solution_list)):
-      solution = solution_list[i]
-      score = submit.run(solution, endpoint, is_practice, graph_path_list[i])
-      for score_i in range(solution_list_max):
-        if score_list[score_i] > score:
-          score_list.insert(score_i, score)
-          solution_list.insert(score_i, new_solution_list[score_i])
-    solution_list = copy.copy(solution_list[:solution_list_max])
-    score_list = copy.copy(score_list[:solution_list_max])
+    print(score_list)
 
-    logger.log_info(f'[score list]: {score_list}')
+    logger.log_debug(f'[score list]: {score_list}')
     graph_path_list = []
 
     # 記録
