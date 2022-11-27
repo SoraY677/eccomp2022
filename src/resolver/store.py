@@ -25,8 +25,6 @@ def init(
       pass
   os.makedirs(save_dir, exist_ok=True)
   filepath = os.path.join(save_dir, f'{filename}.json')
-  
-
   try:
     logger.log_info(f'search {filepath}')
     with open(filepath, 'r') as f:
