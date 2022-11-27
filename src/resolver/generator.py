@@ -84,10 +84,10 @@ def generate_new_solution(
       for i in range(conf.type_sum):
         comp_map_per_time[i]['weights'] = 0
 
-  for i in range(conf.type_sum):
-    logger.log_info( f'create-ans-{i} : { select_list[i*conf.time_max : (i+1)*conf.time_max] }' )
+  # for i in range(conf.type_sum):
+  #   logger.log_info( f'create-ans-{i} : { select_list[i*conf.time_max : (i+1)*conf.time_max] }' )
 
-  logger.log_info(f'generate: {select_list}')
+  # logger.log_info(f'generate: {select_list}')
 
   checker.check_agent_length(select_list)
   checker.check_agent_sum(select_list)

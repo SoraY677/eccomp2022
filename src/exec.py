@@ -21,6 +21,6 @@ def run(
 
   is_practice = mode == constraint.MODE_PRACTICE
   if mode == constraint.MODE_PRACTICE:
-    optimize_mock.init(config_map['time_max'], config_map['unit_minute_min'], config_map['unit_minute_max'], config_map['agent_sum'])
+    optimize_mock.init(config_map['time_max'], config_map['unit_minute_min'], config_map['unit_minute_max'], config_map['agent_sum'], config_map['type_sum'])
 
   resolver.exec(config_map, id, is_clear, is_practice, submit.run)
