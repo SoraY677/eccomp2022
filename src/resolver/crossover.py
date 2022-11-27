@@ -35,23 +35,6 @@ def cross(
   logger.log_info(f'cross result: {result}')
   return result, graph_path
 
-def union(
-    arr1: list,
-    arr2: list
-  ) -> list:
-  '''
-  合成
-  '''
-  logger.log_info('[union]')
-  logger.log_info(f'arr1: {arr1}')
-  logger.log_info(f'arr2: {arr2}')
-  if len(arr1) != len(arr2):
-    logger.log_error('cross over arr length not correct!')
-  union_origin_result = _union_2solutions(arr1, arr2)
-  result, graph_path = generator.generate_new_solution(union_origin_result)
-
-  return result, graph_path
-
 def _cross_2solutions(
     arr1: list,
     arr2: list,
@@ -77,16 +60,3 @@ def _cross_2solutions(
   result += arr[prev_point_index:]
 
   return result
-
-def _union_2solutions(
-    arr1: int,
-    arr2: int
-  ) -> list:
-  '''
-  実際の合成部
-  '''
-  new_arr = []
-  for i in range(len(arr1)):
-    new_arr.append((arr1[i] + arr2[i]) ** 1.6 )
-  return new_arr
-
