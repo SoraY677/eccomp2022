@@ -28,5 +28,5 @@ def random_generate() -> list:
     selected_i = random.randint(0, len(conf.time_max) - 1)
     selected_list[selected_i] += 1
 
-  result = generator.generate_new_solution(selected_list)
-  return result
+  result, graphpath = generator.generate_new_solution(selected_list)
+  return result, graphpath
