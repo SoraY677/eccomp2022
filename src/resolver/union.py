@@ -16,7 +16,7 @@ import logger
 
 import generator
 
-def union(
+def run(
     arr1: list,
     arr2: list
   ) -> list:

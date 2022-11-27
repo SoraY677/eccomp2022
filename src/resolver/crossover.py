@@ -16,7 +16,7 @@ import logger
 
 import generator
 
-def cross(
+def run(
     arr1: list,
     arr2: list,
     cross_point_num: int
