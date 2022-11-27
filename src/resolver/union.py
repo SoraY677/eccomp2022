@@ -15,6 +15,7 @@ else:
 import logger
 
 import generator
+import util
 
 def run(
     arr1: list,
@@ -28,8 +29,12 @@ def run(
   logger.log_info(f'arr2: {arr2}')
   if len(arr1) != len(arr2):
     logger.log_error('cross over arr length not correct!')
-  union_origin_result = _union_2solutions(arr1, arr2)
-  result, graph_path = generator.generate_new_solution(union_origin_result)
+  arr_per_time1 = util.get_select_list_per_type(arr1)
+  arr_per_time2 = util.get_select_list_per_type(arr2)
+  union_arrange_list = []
+  for i in range(len(arr_per_time1)):
+    union_arrange_list.extend(_union_2solutions(arr_per_time1[i], arr_per_time2[i]))
+  result, graph_path = generator.generate_new_solution(union_arrange_list)
 
   return result, graph_path
 
@@ -42,5 +47,5 @@ def _union_2solutions(
   '''
   new_arr = []
   for i in range(len(arr1)):
-    new_arr.append((arr1[i] + arr2[i]) ** 1.6 )
+    new_arr.append(int(arr1[i] + arr2[i]) ** 1.6 )
   return new_arr

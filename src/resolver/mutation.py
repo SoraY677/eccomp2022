@@ -27,8 +27,8 @@ def mutate(
   logger.log_info('[mutate]')
   result = copy.copy(origin_solution)
   result_len = len(result)
-  LOOP_MAX = random.randint(int(conf.agent_sum / 10), conf.agent_sum)
 
+  LOOP_MAX = random.randint(int(conf.agent_sum / 10), conf.agent_sum)
   for _ in range(LOOP_MAX):
     weights = [1 if origin_item > 0 else 0 for origin_item in origin_solution]
     subtract_i = random.choices(list(range(result_len)), k=1, weights=weights)[0]

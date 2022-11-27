@@ -15,6 +15,7 @@ else:
 import logger
 
 import generator
+import util
 
 def run(
     arr1: list,
@@ -29,9 +30,14 @@ def run(
   logger.log_info(f'arr2: {arr2}')
   if len(arr1) != len(arr2):
     logger.log_error('cross over arr length not correct!')
-  cross_origin_result = _cross_2solutions(arr1, arr2, cross_point_num)
+  
+  arr_per_time1 = util.get_select_list_per_type(arr1)
+  arr_per_time2 = util.get_select_list_per_type(arr2)
+  cross_origin_result = []
+  for i in range(len(arr_per_time1)):
+    cross_origin_result.extend(_cross_2solutions(arr_per_time1[i], arr_per_time2[i], cross_point_num))
   result, graph_path = generator.generate_new_solution(cross_origin_result)
-
+  
   logger.log_info(f'cross result: {result}')
   return result, graph_path
 

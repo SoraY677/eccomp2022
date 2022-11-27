@@ -48,7 +48,6 @@ def submit_server(solution, endpoint, is_practice):
   if is_practice:
     return optimize_mock.optimize(solution)
   score = random.random()
-  score = endpoint
   return score
 
 def run(
@@ -61,14 +60,14 @@ def run(
   '''
   global best_score_list
   global filepath
-  logger.log_info(f'[solution-submit] {solution}')
+  logger.log_info(f'[solution-submit]')
   score = submit_server(solution, endpoint, is_practice)
-  logger.log_info(f'[solution score] {score}')
+  logger.log_info(f'score: {score}')
 
   # ベストスコア更新
   best_score = score if(len(best_score_list) == 0) else best_score_list[-1]
   if(score < best_score):
-    message = f'[best score updated!!!]{score}'
+    message = f'[++++best score updated!+++++]{score}'
     logger.log_info(f'{message}')
     best_score = score
   best_score_list.append(best_score)

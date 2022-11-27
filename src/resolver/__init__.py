@@ -41,14 +41,13 @@ def _setup(
   set_config(config_map)
 
 def _init():
-  init_generated_list = \
-    [init_generate() for _ in range(conf.individual_num)] if _store_map is None \
-    else _store_map['solution_list'] 
+  init_generated_list = [init_generate() for _ in range(conf.individual_num)] \
+    if _store_map is None \
+    else [[_store_map['solution_list'][i], _store_map['graph_path_list'][i]] for i in range(conf.individual_num) ]
   solution_list = [item[0] for item in init_generated_list]
   graph_path_list = [item[1] for item in init_generated_list]
   score_list = [ sys.maxsize ] * conf.individual_num if _store_map is None else _store_map['score_list']
   loop_start = 1 if _store_map is None else _store_map['count_index']
-
   return solution_list, graph_path_list, score_list, loop_start
 
 def exec(
@@ -69,7 +68,6 @@ def exec(
       'score': score_list[i],
       'solution': solution_list[i]
     } for i in range(conf.individual_num)]
-
     for solution_i in range(len(solution_list)):
       solution = solution_list[solution_i]
       score = optimize_function(solution, conf.endpoint, is_practice)
@@ -78,16 +76,17 @@ def exec(
         'score': score,
         'solution': solution
       })
-    score_solution_map_list_sorted = sorted(best_solution_map_list, key=lambda x:x['score'])
+    score_solution_map_list_sorted = sorted(best_solution_map_list, key=lambda x: x['score'])
     solution_list = [ score_solution_map_list_sorted[i]['solution'] for i in range(conf.individual_num)]
     score_list    = [ score_solution_map_list_sorted[i]['score'] for i in range(conf.individual_num)]
 
     logger.log_debug(f'[score list]: {score_list}')
 
-    store.save(count, solution_list, score_list)
+    store.save(count, solution_list, score_list, graph_path_list)
 
     new_solution_list = []
-    for _ in range(conf.time_max):
+    graph_path_list = []
+    for _ in range(conf.submit_max):
       select_i1, select_i2 = select(score_list)
       selected_solution1 = solution_list[select_i1]
       selected_solution2 = solution_list[select_i2]

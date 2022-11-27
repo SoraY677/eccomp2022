@@ -37,13 +37,15 @@ def init(
 def save(
     count_index, 
     solution_list,
-    score_list
+    score_list,
+    graph_path_list
   ):
   global filepath
   save_data = {
     'count_index': count_index,
     'solution_list' : solution_list,
-    'score_list': score_list
+    'score_list': score_list,
+    'graph_path_list': graph_path_list
   }
   try:
     logger.log_info(f'save {filepath}')
