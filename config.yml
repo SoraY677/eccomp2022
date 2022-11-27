@@ -14,7 +14,7 @@ sop:
       unit_minute_min: 0
       unit_minute_max: 45
       agent_sum: 4500
-      type_sum: 1
+      type_sum: 3
       submit_max: 1000
       endpoint: ''
   demo:
