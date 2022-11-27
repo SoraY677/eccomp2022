@@ -6,19 +6,14 @@ sop:
       unit_minute_min: 0
       unit_minute_max: 45
       agent_sum: 4500
-      is_type_categorize: false
-      solution_list_max: 20
+      type_sum: 1
       submit_max: 1000
     2:
       time_max: 300
-      agent_sum: 4500
       unit_minute_min: 0
       unit_minute_max: 45
-      is_type_categorize: true
-      type_guided_sum: 300
-      type_busy_sum: 300
-      type_slow_sum: 300
-      solution_list_max: 10
+      agent_sum: 4500
+      type_sum: 1
       submit_max: 1000
   demo:
     1:
@@ -26,38 +21,29 @@ sop:
       unit_minute_min: 0
       unit_minute_max: 45
       agent_sum: 4500
-      is_type_categorize: false
-      solution_list_max: 10
+      type_sum: 1
       submit_max: 1000
     2:
       time_max: 300
-      agent_sum: 4500
       unit_minute_min: 0
       unit_minute_max: 45
-      is_type_categorize: true
-      type_guided_sum: 300
-      type_busy_sum: 300
-      type_slow_sum: 300
-      solution_list_max: 10
-      submit_max: 10000
+      agent_sum: 4500
+      type_sum: 3
+      submit_max: 1000
   prod:
     1:
       time_max: 300
       unit_minute_min: 0
       unit_minute_max: 45
       agent_sum: 4660
-      solution_list_max: 10
-      submit_max: 10000
+      type_sum: 1
+      submit_max: 1000
     2:
-      length: 900
+      time_max: 300
       unit_minute_min: 0
       unit_minute_max: 45
       agent_sum: 4079
-      is_type_categorize: true
-      type_guided_sum: 300
-      type_busy_sum: 300
-      type_slow_sum: 300
-      solution_list_max: 10
+      type_sum: 3
       submit_max: 1000
 
 
