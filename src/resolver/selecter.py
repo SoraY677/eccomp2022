@@ -14,13 +14,17 @@ else:
   sys.path.append(os.path.join(project_dir, 'src'))
 import logger
 
-def select(score_list: list, score_list_sum: int) -> int:
+def select(
+    score_list: list
+  ) -> int:
   '''
   2個体選択
   '''
+  score_list_sum = sum(score_list)
   selected_weights = [score_list_sum - score for score in score_list]
   logger.log_debug(f'selected weight: {selected_weights}')
+
   selected_index_list = random.choices(list(range(len(score_list))), k=2, weights=selected_weights)
-  
   logger.log_debug(f'select index: {selected_index_list}')
+  
   return selected_index_list[0], selected_index_list[1]
