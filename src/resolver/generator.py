@@ -8,6 +8,7 @@
 import os
 import sys
 import random
+import copy
 
 import numpy as np
 if __name__ == '__main__':
@@ -49,28 +50,54 @@ def _calc_approximate_function(
 
 def generate_new_solution(
     # 制約条件無視で生成させたい配列
-    origin_arr: list
+    origin_list: list
   ) -> list:
   '''
   関数を確率に見立てて、制約条件から解を生成
   '''
-  approximate = _calc_approximate_function(origin_arr)
-  origin_result_arr = [approximate[i] for i in range(len(origin_arr))]
-  origin_result_sum = sum(origin_result_arr)
-  origin_result_len = len(origin_result_arr)
-
-  select_list = [0 for _ in range(origin_result_len)]
-  weights = [item / origin_result_sum for item in origin_result_arr]
+  comp_map_per_time = []
+  # 各エージェントタイプごとに近似関数他を生成
+  for i in range(conf.type_sum):
+    origin_list_per_time = copy.copy(origin_list[i*conf.time_max : (i+1)*conf.time_max])
+    approximate = _calc_approximate_function(origin_list_per_time)
+    origin_result_arr = [approximate[i] for i in range(len(origin_list_per_time))]
+    origin_result_sum = sum(origin_result_arr)
+    weights = [item / origin_result_sum for item in origin_result_arr]
+    comp_map_per_time.append({
+      'approximate': approximate,
+      'origin_result_arr': origin_result_arr,
+      'weights': weights,
+      'origin_result_len': len(origin_result_arr),
+    })
+  # 各タイプを考慮したランダム選択
+  select_list = [0 for _ in range(conf.time_max * conf.type_sum)]
   for _ in range(conf.agent_sum):
-    selected_index = random.choices(list(range(origin_result_len)), k=1, weights=weights)[0]
-    select_list[selected_index] += 1
-    if select_list[selected_index] == (conf.unit_minute_max - conf.unit_minute_min):
-      weights[selected_index] = 0
+    selected_type_i = random.randint(0, conf.type_sum - 1)
+    selected_time_i = random.choices(list(range(conf.time_max)), k=1, weights=comp_map_per_time[selected_type_i]['weights'])[0]
+    select_list[selected_type_i * conf.time_max + selected_time_i] += 1
+
+    # 制約条件による生成時の制限
+    time_sum = 0
+    for i in range(conf.type_sum):
+      time_sum += select_list[i * conf.time_max + selected_time_i]
+    if time_sum == (conf.unit_minute_max - conf.unit_minute_min):
+      for i in range(conf.type_sum):
+        comp_map_per_time[i]['weights'] = 0
+
+  for i in range(conf.type_sum):
+    logger.log_info( f'create-ans-{i} : { select_list[i*conf.time_max : (i+1)*conf.time_max] }' )
 
   logger.log_info(f'generate: {select_list}')
 
   checker.check_agent_length(select_list)
-  checker.check_agent_size_per_time(select_list)
-  graph_name = graph_plotter.plot_person_per_time_and_approximate_function(np.arange(len(select_list)), np.array(select_list), approximate)
+  checker.check_agent_sum(select_list)
+
+  plot_map = []
+  for i in range(conf.type_sum):
+    plot_map.append({
+      'select_list': select_list[i*conf.time_max : (i+1)*conf.time_max],
+      'approximate': comp_map_per_time[i]['approximate']
+    })
+  graph_name = graph_plotter.plot_person_per_time_and_approximate_function(np.arange(conf.time_max), plot_map)
 
   return select_list, graph_name

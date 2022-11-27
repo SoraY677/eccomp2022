@@ -15,19 +15,15 @@ import logger
 
 import resolver_config as conf
 
-def is_valid_agent_sum(count_list):
-  logger.log_debug(f'agent length check....: [length]{conf.agent_sum} : [count list sum]{sum(count_list)}')
-  if sum(count_list) == conf.agent_sum:
-    logger.log_debug('no problem!!')
-  else:
+def check_agent_sum(count_list):
+  logger.log_info(f'agent length check....: [ans]{conf.agent_sum} : [try]{sum(count_list)}')
+  if sum(count_list) != conf.agent_sum:
     logger.log_error('agent length check fail!')
 
 def check_agent_length(result):
-  sum_num = sum(result)
-  logger.log_debug(f'agent length check....: [length]{conf.agent_sum} : [sum]{sum_num}')
-  if sum_num == conf.agent_sum:
-    logger.log_debug('no problem!!')
-  else:
+  length = len(result)
+  logger.log_info(f'agent length check....: [ans]{conf.time_max * conf.type_sum} : [try]{length}')
+  if length != conf.time_max * conf.type_sum:
     logger.log_error('agent length check fail!')
 
 def check_agent_size_per_time(result):
