@@ -8,6 +8,7 @@ import command
 from exec import run
 import submit
 import store
+import graph_plotter
 
 def process() -> None:
   '''
@@ -40,5 +41,6 @@ def process() -> None:
 
   best_score_list = submit.get_best_score_list()
   logger.log_info(f'[best score list] {best_score_list}')
-  
+  graph_plotter.plot_best_score_list(best_score_list)
+
 __all__ = ['process']
