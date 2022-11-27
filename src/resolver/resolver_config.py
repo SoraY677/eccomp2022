@@ -15,8 +15,9 @@ unit_minute_max = 45
 agent_sum = 4500
 type_sum = 1
 submit_max = 1000
+endpoint = ''
 
-individual_num = 20 # 個体数
+individual_num = 10 # 個体数
 evolve_max = None # 進化回数
 
 def set_config(
@@ -31,8 +32,9 @@ def set_config(
     'unit_minute_min',
     'unit_minute_max',
     'agent_sum',
-    'type_sum'
+    'type_sum',
+    'endpoint'
   ):
     global_map[key] = config_map[key]
 
-  global_map['evolve_max'] = global_map['submit_max'] / global_map['individual_num']
+  global_map['evolve_max'] = int(global_map['submit_max'] / global_map['individual_num'])

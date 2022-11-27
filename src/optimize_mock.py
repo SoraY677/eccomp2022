@@ -82,6 +82,5 @@ def init(
   )
   graph_plotter.plot_practice_gauss(x, _gauss_function_result_list, np.array(multi_gauss_result), np.array(_mock_result))
 
-
-def response(solution):
+def optimize(solution):
   return calc_least_squares_error(solution)

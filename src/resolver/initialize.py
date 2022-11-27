@@ -17,7 +17,7 @@ import logger
 import resolver_config as conf
 import generator
 
-def random_generate() -> list:
+def run() -> list:
   '''
   初期解生成
   ランダムに解を生成
@@ -25,7 +25,7 @@ def random_generate() -> list:
   logger.log_info('[random generate]')
   selected_list = [0] * conf.time_max * conf.type_sum
   for _ in range(conf.agent_sum):
-    selected_i = random.randint(0, len(conf.time_max) - 1)
+    selected_i = random.randint(0, conf.time_max - 1)
     selected_list[selected_i] += 1
 
   result, graphpath = generator.generate_new_solution(selected_list)

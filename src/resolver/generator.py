@@ -20,15 +20,17 @@ else:
   project_dir = current_dir[:current_dir.find(f"{PROJECT_NAME}")+len(f"{PROJECT_NAME}")]
   src_dir = os.path.join(project_dir, 'src')
   if src_dir not in sys.path: sys.path.append(src_dir)
+import logger
 import graph_plotter
 
 import resolver_config as conf
+import checker
 
 def _calc_approximate_function(
    origin_arr: list
   ) -> any:
   '''
-  解から近似関数を求める
+  解から平滑化した近似関数を求める
   '''
   result = []
   arr_len = len(origin_arr)
@@ -43,34 +45,32 @@ def _calc_approximate_function(
       item += origin_arr[i+dif]
       effective_dif_count += 1
     result.append(item / effective_dif_count)
-  graph_name = graph_plotter.plot_person_per_time_and_approximate_function(np.arange(arr_len), np.array(origin_arr), result)
-  return result, graph_name
+  return result
 
 def generate_new_solution(
     # 制約条件無視で生成させたい配列
-    origin_arr: list,
-    # 制約上限
-    unit_minute_min: int, 
-    unit_minute_max: int,
-    # エージェントの最大値
-    agent_sum: int,
-    # タイプ数
-    type_max: int
+    origin_arr: list
   ) -> list:
   '''
-  新規に解を生成
+  関数を確率に見立てて、制約条件から解を生成
   '''
-  approximate, graph_name = _calc_approximate_function(origin_arr)
+  approximate = _calc_approximate_function(origin_arr)
   origin_result_arr = [approximate[i] for i in range(len(origin_arr))]
   origin_result_sum = sum(origin_result_arr)
   origin_result_len = len(origin_result_arr)
 
   select_list = [0 for _ in range(origin_result_len)]
   weights = [item / origin_result_sum for item in origin_result_arr]
-  for _ in range(agent_sum):
+  for _ in range(conf.agent_sum):
     selected_index = random.choices(list(range(origin_result_len)), k=1, weights=weights)[0]
     select_list[selected_index] += 1
     if select_list[selected_index] == (conf.unit_minute_max - conf.unit_minute_min):
       weights[selected_index] = 0
+
+  logger.log_info(f'generate: {select_list}')
+
+  checker.check_agent_length(select_list)
+  checker.check_agent_size_per_time(select_list)
+  graph_name = graph_plotter.plot_person_per_time_and_approximate_function(np.arange(len(select_list)), np.array(select_list), approximate)
 
   return select_list, graph_name

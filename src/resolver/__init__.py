@@ -1,11 +1,24 @@
 import os
 import sys
-import copy
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
+import random
+import copy
+
+if __name__ == '__main__':
+  sys.path.append(os.path.abspath('../..'))
+else:
+  from dotenv import load_dotenv
+  load_dotenv()
+  PROJECT_NAME = os.getenv('PROJECT_NAME')
+  current_dir = os.path.abspath(os.curdir)
+  project_dir = current_dir[:current_dir.find("{PROJECT_NAME}")+len("{PROJECT_NAME}")]
+  sys.path.append(os.path.join(project_dir, 'src'))
+import logger
+
 
 import resolver_config as conf
 from resolver_config import set_config
-from generate import random_generate as first_generate
+from initialize import run as init_generate
 from crossover import run as cross
 from union import run as union
 from selecter import select
@@ -16,36 +29,85 @@ __all__ = [
   'exec',
 ]
 
+_store_map = None
+
 def _setup(
+    id,
     config_map,
     is_clear
   ):
-  # graph_plotter.init(id, is_clear)
-  store_map = store.init(id, is_clear)
+  global _store_map
+  _store_map = store.init(id, is_clear)
   set_config(config_map)
 
-def _init(
-    store_map
-  ):
-  solution_list = \
-    [first_generate() for _ in range(conf.individual_num)] if store_map is None \
-    else store_map['solution_list'] 
-  loop_start = 0 if store_map is None else store_map['count_index']
-  score_list = [ sys.maxsize ] * conf.individual_num if store_map is None else store_map['score_list']
+def _init():
+  init_generated_list = \
+    [init_generate() for _ in range(conf.individual_num)] if _store_map is None \
+    else _store_map['solution_list'] 
+  solution_list = [item[0] for item in init_generated_list]
+  graph_path_list = [item[1] for item in init_generated_list]
+  score_list = [ sys.maxsize ] * conf.individual_num if _store_map is None else _store_map['score_list']
+  loop_start = 1 if _store_map is None else _store_map['count_index']
 
-
-  new_solution_list = copy.copy(solution_list)
+  return solution_list, graph_path_list, score_list, loop_start
 
 def exec(
   config_map,
   id,
   is_clear,
+  is_practice,
   optimize_function
 ):
   '''
   一連の実行
   '''
-  _setup(config_map, is_clear)
-  _init()
-  for i in range(conf.evolve_max):
-    pass
+  _setup(id, config_map, is_clear)
+  solution_list, graph_path_list, score_list, loop_start = _init()
+  for count in range(loop_start, conf.evolve_max + 1):
+    logger.log_info(f'+++++ calculation {count} +++++')
+    best_solution_map_list = [{
+      'score': score_list[i],
+      'solution': solution_list[i]
+    } for i in range(conf.individual_num)]
+
+    for solution_i in range(len(solution_list)):
+      solution = solution_list[solution_i]
+      score = optimize_function(solution, conf.endpoint, is_practice)
+      logger.log_info(f'{graph_path_list[solution_i]}')
+      best_solution_map_list.append({
+        'score': score,
+        'solution': solution
+      })
+    score_solution_map_list_sorted = sorted(best_solution_map_list, key=lambda x:x['score'])
+    solution_list = [ score_solution_map_list_sorted[i]['solution'] for i in range(conf.individual_num)]
+    score_list    = [ score_solution_map_list_sorted[i]['score'] for i in range(conf.individual_num)]
+
+    logger.log_debug(f'[score list]: {score_list}')
+
+    store.save(count, solution_list, score_list)
+
+    new_solution_list = []
+    for _ in range(conf.time_max):
+      select_i1, select_i2 = select(score_list)
+      selected_solution1 = solution_list[select_i1]
+      selected_solution2 = solution_list[select_i2]
+      # 突然変異
+      if random.random() < 0.1:
+        solution, graph_path = mutate(selected_solution1)
+        graph_path_list.append(graph_path)
+        new_solution_list.append(solution)
+        continue
+      # 合成
+      if random.random() < 0.5:
+        solution, graph_path = union(selected_solution1, selected_solution2)
+        graph_path_list.append(graph_path)
+        new_solution_list.append(solution)
+        continue
+      # 交叉
+      else:
+        solution, graph_path = cross(selected_solution1, selected_solution2, 2)
+        graph_path_list.append(graph_path)
+        new_solution_list.append(solution)
+        continue
+    solution_list = copy.copy(new_solution_list)
+    logger.log_info(f'calculation {count} result:{min(score_list)}')

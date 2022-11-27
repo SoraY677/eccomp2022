@@ -7,7 +7,6 @@ import logger
 import command
 from exec import run
 import submit
-import store
 import graph_plotter
 
 def process() -> None:
@@ -22,14 +21,14 @@ def process() -> None:
 
   logger.init(id, is_clear)
   submit.init(id, is_clear)
-  store_map = store.init(id, is_clear)
+  graph_plotter.init(id,is_clear)
 
   logger.log_info(f'[mode] {mode}')
 
   dt_start =  datetime.datetime.today()
   logger.log_info(f'[start]{dt_start.strftime("%Y-%m-%d %H:%M:%S")}')
 
-  run(mode, optimize_mode, optimize_number, id, store_map)
+  run(mode, optimize_mode, optimize_number, id, is_clear)
 
   dt_end = datetime.datetime.today()
   logger.log_info(f'[end]{dt_end.strftime("%Y-%m-%d %H:%M:%S")}')

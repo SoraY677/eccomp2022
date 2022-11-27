@@ -3,7 +3,7 @@ import random
 import shutil
 
 import logger
-import mock_server
+import optimize_mock
 
 from dotenv import load_dotenv
 load_dotenv()
@@ -13,8 +13,6 @@ project_dir = current_dir[:current_dir.find(f"{PROJECT_NAME}")+len(f"{PROJECT_NA
 
 filepath = ""
 best_score_list = []
-
-_is_practice = False
 
 def init(
   filename:str,
@@ -48,7 +46,7 @@ def init(
 
 def submit_server(solution, endpoint, is_practice):
   if is_practice:
-    return mock_server.response(solution)
+    return optimize_mock.optimize(solution)
   score = random.random()
   score = endpoint
   return score
@@ -56,8 +54,7 @@ def submit_server(solution, endpoint, is_practice):
 def run(
   solution,
   endpoint,
-  is_practice,
-  graph_path
+  is_practice
 ):
   '''
   解提出
@@ -66,7 +63,6 @@ def run(
   global filepath
   logger.log_info(f'[solution-submit] {solution}')
   score = submit_server(solution, endpoint, is_practice)
-  logger.log_info(f'graph:{graph_path}')
   logger.log_info(f'[solution score] {score}')
 
   # ベストスコア更新

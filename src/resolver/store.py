@@ -32,7 +32,6 @@ def init(
   except:
       logger.log_info('not found prev score file')
       store_map = None
-
   return store_map
 
 def save(
@@ -46,7 +45,6 @@ def save(
     'solution_list' : solution_list,
     'score_list': score_list
   }
-
   try:
     logger.log_info(f'save {filepath}')
     with open(filepath, 'w') as f:

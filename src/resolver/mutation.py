@@ -14,31 +14,27 @@ else:
   src_dir = os.path.join(project_dir, 'src')
   if src_dir not in sys.path: sys.path.append(src_dir)
 import logger
-
-from generate import random_generate
+import resolver_config as conf
+import generator
 
 def mutate(
-      origin_solution: list,
-      unit_minute_min: int,
-      unit_minute_max: int,
-      agent_sum: int
-    ) -> list:
+      origin_solution: list
+    ) -> map:
   '''
   突然変異
   = 初期解生成時のランダム生成
   '''
   logger.log_info('[mutate]')
-  new_solution = copy.copy(origin_solution)
-  new_solution_len = len(new_solution)
-  LOOP_MAX = random.randint(1, agent_sum)
+  result = copy.copy(origin_solution)
+  result_len = len(result)
+  LOOP_MAX = random.randint(int(conf.agent_sum / 10), conf.agent_sum)
 
   for _ in range(LOOP_MAX):
-    weights = [1 if origin_item > 0 else 0 for origin_item in new_solution]
-    subtract_i = random.choices(list(range(new_solution_len)), k=1, weights=weights)[0]
-    new_solution[subtract_i] -= 1
+    weights = [1 if origin_item > 0 else 0 for origin_item in origin_solution]
+    subtract_i = random.choices(list(range(result_len)), k=1, weights=weights)[0]
+    result[subtract_i] -= 1
 
-    weights = [1 if origin_item < (unit_minute_max - unit_minute_min) else 0 for origin_item in new_solution]
-    add_i = random.choices(list(range(new_solution_len)), k=1, weights=weights)[0]
-    new_solution[add_i] +=1
+    add_i = random.randint(0, result_len - 1)
+    result[add_i] +=1
 
-  return new_solution
+  return generator.generate_new_solution(result)
