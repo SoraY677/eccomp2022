@@ -22,13 +22,13 @@ else:
   if src_dir not in sys.path: sys.path.append(src_dir)
 import graph_plotter
 
-import resolver_conig as conf
+import resolver_config as conf
 
 def _calc_approximate_function(
    origin_arr: list
   ) -> any:
   '''
-  近似関数を求める
+  解から近似関数を求める
   '''
   result = []
   arr_len = len(origin_arr)
@@ -46,7 +46,7 @@ def _calc_approximate_function(
   graph_name = graph_plotter.plot_person_per_time_and_approximate_function(np.arange(arr_len), np.array(origin_arr), result)
   return result, graph_name
 
-def create_new_solution(
+def generate_new_solution(
     # 制約条件無視で生成させたい配列
     origin_arr: list,
     # 制約上限
@@ -54,6 +54,8 @@ def create_new_solution(
     unit_minute_max: int,
     # エージェントの最大値
     agent_sum: int,
+    # タイプ数
+    type_max: int
   ) -> list:
   '''
   新規に解を生成
