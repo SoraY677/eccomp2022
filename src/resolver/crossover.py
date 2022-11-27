@@ -2,9 +2,6 @@ import os
 import sys
 import random
 
-import numpy as np
-from scipy.interpolate import interp1d
-
 if __name__ == '__main__':
   sys.path.append(os.path.abspath('../..'))
 else:
@@ -17,15 +14,12 @@ else:
   if src_dir not in sys.path: sys.path.append(src_dir)
 import logger
 
-import util
+import generator
 
 def cross(
     arr1: list,
     arr2: list,
-    cross_point_num: int,
-    unit_minute_min: int,
-    unit_minute_max: int,
-    agent_sum: int
+    cross_point_num: int
   ) -> list:
   '''
   交叉
@@ -36,31 +30,14 @@ def cross(
   if len(arr1) != len(arr2):
     logger.log_error('cross over arr length not correct!')
   cross_origin_result = _cross_2solutions(arr1, arr2, cross_point_num)
-  result, graph_path = util.create_new_solution(cross_origin_result, unit_minute_min, unit_minute_max, agent_sum)
+  result, graph_path = generator.generate_new_solution(cross_origin_result)
 
   logger.log_info(f'cross result: {result}')
-
-  logger.log_debug(f'agent length check....: [length]{agent_sum} : [sum]{sum(result)}')
-  if sum(result) == agent_sum:
-    logger.log_debug('no problem!!')
-  else:
-    logger.log_error('agent length check fail!')
-
-  isSizePass = max(result) <= ( unit_minute_max - unit_minute_min )
-  logger.log_debug(f'agent size over check....: {max(result)}')
-  if isSizePass:
-    logger.log_debug('no problem!!')
-  else:
-    logger.log_error('agent size check fail!')
-
   return result, graph_path
 
 def union(
     arr1: list,
-    arr2: list,
-    unit_minute_min: int,
-    unit_minute_max: int,
-    agent_sum: int
+    arr2: list
   ) -> list:
   '''
   合成
@@ -71,22 +48,8 @@ def union(
   if len(arr1) != len(arr2):
     logger.log_error('cross over arr length not correct!')
   union_origin_result = _union_2solutions(arr1, arr2)
-  result, graph_path = util.create_new_solution(union_origin_result, unit_minute_min, unit_minute_max, agent_sum)
+  result, graph_path = generator.generate_new_solution(union_origin_result)
 
-  logger.log_info(f'union result: {result}')
-
-  logger.log_debug(f'agent length check....: [length]{agent_sum} : [sum]{sum(result)}')
-  if sum(result) == agent_sum:
-    logger.log_debug('no problem!!')
-  else:
-    logger.log_error('agent length check fail!')
-
-  isSizePass = max(result) <= ( unit_minute_max - unit_minute_min )
-  logger.log_debug(f'agent size over check....: {max(result)}')
-  if isSizePass:
-    logger.log_debug('no problem!!')
-  else:
-    logger.log_error('agent size check fail!')
   return result, graph_path
 
 def _cross_2solutions(
@@ -124,6 +87,6 @@ def _union_2solutions(
   '''
   new_arr = []
   for i in range(len(arr1)):
-    new_arr.append((arr1[i] + arr2[i]) ** 2 )
+    new_arr.append((arr1[i] + arr2[i]) ** 1.6 )
   return new_arr
 
