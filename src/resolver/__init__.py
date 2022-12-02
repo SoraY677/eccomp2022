@@ -101,29 +101,25 @@ def exec(
       selected_solution1 = solution_list[select_i1]
       selected_solution2 = solution_list[select_i2]
       # 突然変異
-      # if random.random() < 0.1:
-      #   logger.log_info(f'[mutate] {select_i1}')
-      #   solution, graph_path = mutate(selected_solution1)
-      #   graph_path_list.append(graph_path)
-      #   new_solution_list.append(solution)
-      #   continue
-      # # 合成
-      # if random.random() < 0.5:
-      #   logger.log_info(f'[union] {select_i1}:{select_i2}')
-      #   solution, graph_path = union(selected_solution1, selected_solution2)
-      #   graph_path_list.append(graph_path)
-      #   new_solution_list.append(solution)
-      #   continue
-      # # 交叉
-      # else:
-      #   logger.log_info(f'[cross] {select_i1}:{select_i2}')
-      #   solution, graph_path = cross(selected_solution1, selected_solution2, 2)
-      #   graph_path_list.append(graph_path)
-      #   new_solution_list.append(solution)
-      #   continue
-      logger.log_info(f'[union] {select_i1}:{select_i2}')
-      solution, graph_path = union(selected_solution1, selected_solution2)
-      graph_path_list.append(graph_path)
-      new_solution_list.append(solution)
+      if random.random() < 0.1:
+        logger.log_info(f'[mutate] {select_i1}')
+        solution, graph_path = mutate(selected_solution1)
+        graph_path_list.append(graph_path)
+        new_solution_list.append(solution)
+        continue
+      # 合成
+      if random.random() < 0.5:
+        logger.log_info(f'[union] {select_i1}:{select_i2}')
+        solution, graph_path = union(selected_solution1, selected_solution2)
+        graph_path_list.append(graph_path)
+        new_solution_list.append(solution)
+        continue
+      # 交叉
+      else:
+        logger.log_info(f'[cross] {select_i1}:{select_i2}')
+        solution, graph_path = cross(selected_solution1, selected_solution2, 2)
+        graph_path_list.append(graph_path)
+        new_solution_list.append(solution)
+        continue
     solution_list = copy.copy(new_solution_list)
     logger.log_info(f'calculation {count} result:{min(score_list)}')

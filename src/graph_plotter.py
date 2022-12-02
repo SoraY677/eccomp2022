@@ -30,14 +30,18 @@ def init(
 
 def plot_person_per_time_and_approximate_function(
     t,
-    map_list
+    plot_map
   ):
-  color_list = ['red', 'blue', 'green']
+  color_list = ['blue', 'green', 'yellow']
   _, ax1 = plt.subplots(figsize=(17, 4))
-  for i in range(len(map_list)):
-    ax2 = ax1.twinx()
-    ax1.bar(t, map_list[i]['select_list'], color=color_list[i % 3], alpha=0.3)
-    ax2.plot(t, map_list[i]['approximate'], color=color_list[i % 3], linewidth=2, alpha=0.3)
+  select_sum_list = plot_map['select_sum_list']
+  ax1.bar(t, select_sum_list, color='gray', alpha=0.2)
+  select_list_per_type = plot_map['select_list_per_type']
+  approximate_sum_list = plot_map['approximate_sum_list']
+  ax2 = ax1.twinx()
+  ax2.plot(t, approximate_sum_list, color='red', linewidth=2, alpha=0.7)
+  for i in range(len(select_list_per_type)):
+    ax2.plot(t, select_list_per_type[i]['approximate'], color=color_list[i % 3], linewidth=2, alpha=0.4)
   return save_file(plt)
 
 def plot_best_score_list(best_score_list):

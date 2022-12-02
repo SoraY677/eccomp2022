@@ -93,10 +93,18 @@ def generate_new_solution(
   checker.check_agent_length(select_list)
   checker.check_agent_sum(select_list)
 
-  plot_map = []
+  plot_map = {}
+  select_sum_list = [0 for _ in range(conf.time_max)]
+  approximate_sum_list = [0 for _ in range(conf.time_max)]
+  for type_i in range(conf.type_sum):
+    for time_i in range(conf.time_max):
+      select_sum_list[time_i] += select_list[type_i * conf.time_max + time_i]
+      approximate_sum_list[time_i] += comp_map_per_time[type_i]['approximate'][time_i]
+  plot_map['select_sum_list'] =  select_sum_list
+  plot_map['approximate_sum_list'] = approximate_sum_list
+  plot_map['select_list_per_type'] = []
   for i in range(conf.type_sum):
-    plot_map.append({
-      'select_list': select_list[i*conf.time_max : (i+1)*conf.time_max],
+    plot_map['select_list_per_type'].append({
       'approximate': comp_map_per_time[i]['approximate']
     })
   graph_name = graph_plotter.plot_person_per_time_and_approximate_function(np.arange(conf.time_max), plot_map)
