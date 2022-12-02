@@ -146,5 +146,3 @@ $ conda remove -n eccomp2022 --all
 
 - 山口要約：https://github.com/SoraY677/eccomp2022/blob/develop/doc/概要-山口要約.md
 - 最適化方針：TODO
-
-
