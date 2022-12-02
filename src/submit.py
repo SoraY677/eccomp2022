@@ -1,9 +1,9 @@
 import os
-import random
 import shutil
 
 import logger
 import optimize_mock
+import optimize_prod
 
 from dotenv import load_dotenv
 load_dotenv()
@@ -44,14 +44,14 @@ def init(
       logger.log_info('not found prev score file')
       best_score_list = []
 
-def submit_server(solution, match_number, is_practice):
+def submit_server(solution_list, match_number, is_practice):
   if is_practice:
-    return optimize_mock.optimize(solution)
-  score = random.random()
-  return score
+    return optimize_mock.optimize(solution_list)
+
+  return optimize_prod.optimize(solution_list, match_number)
 
 def run(
-  solution,
+  solution_list,
   match_number,
   is_practice
 ):
@@ -60,22 +60,22 @@ def run(
   '''
   global best_score_list
   global filepath
-  logger.log_info(f'[solution-submit]')
-  score = submit_server(solution, match_number, is_practice)
-  logger.log_info(f'score: {score}')
+  logger.log_info(f'[solution-list-submit]')
+  score_list = submit_server(solution_list, match_number, is_practice)
 
+  submit_min_score = min(score_list)
   # ベストスコア更新
-  best_score = score if(len(best_score_list) == 0) else best_score_list[-1]
-  if(score < best_score):
-    message = f'[++++best score updated!+++++]{score}'
+  best_score = submit_min_score if(len(best_score_list) == 0) else best_score_list[-1]
+  if(submit_min_score < best_score):
+    message = f'[++++best score updated!+++++]{submit_min_score}'
     logger.log_info(f'{message}')
-    best_score = score
+    best_score = submit_min_score
   best_score_list.append(best_score)
   # スコアを保存
   with open(filepath, 'w') as f:
       score_text = "\n".join([str(best_score) for best_score in best_score_list])
       f.write(f'{score_text}')
-  return score
+  return score_list
 
 def get_best_score_list():
   global best_score_list

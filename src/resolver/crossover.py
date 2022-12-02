@@ -25,9 +25,8 @@ def run(
   '''
   交叉
   '''
-  logger.log_info('[cross]')
-  # logger.log_info(f'arr1: {arr1}')
-  # logger.log_info(f'arr2: {arr2}')
+  logger.log_debug(f'arr1: {arr1}')
+  logger.log_debug(f'arr2: {arr2}')
   if len(arr1) != len(arr2):
     logger.log_error('cross over arr length not correct!')
   

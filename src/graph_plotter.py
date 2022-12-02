@@ -67,6 +67,5 @@ def save_file(plt):
   time = datetime.datetime.now().strftime('%Y-%m-%d-%H-%M-%S-%f')[:-3]
   filepath = os.path.join(save_image_dir, time + '.png')
   plt.savefig(filepath, format="png", dpi=300)
-  logger.log_info(f'graph: {filepath}')
   plt.close()
   return filepath

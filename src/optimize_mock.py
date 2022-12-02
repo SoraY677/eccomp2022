@@ -48,7 +48,7 @@ def calc_least_squares_error(test_solution):
   answer_solution = copy.copy(_mock_result)
   test_solution_length = len(test_solution)
   answer_solution_length = len(answer_solution)
-  logger.log_info(f'length check....: [length]{test_solution_length} : [ans_length]{answer_solution_length}')
+  logger.log_debug(f'length check....: [length]{test_solution_length} : [ans_length]{answer_solution_length}')
   if test_solution_length != answer_solution_length:
     logger.log_error('length check fail!')
 
@@ -89,5 +89,9 @@ def init(
 
   graph_plotter.plot_practice_gauss(x, _gauss_function_result_list, np.array(multi_gauss_result), np.array(mock_result_unit))
 
-def optimize(solution):
-  return calc_least_squares_error(solution)
+def optimize(solution_list):
+  score_list = []
+  for solution in solution_list:
+    score = calc_least_squares_error(solution)
+    score_list.append(score)
+  return score_list

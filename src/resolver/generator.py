@@ -69,6 +69,7 @@ def generate_new_solution(
       'weights': weights,
       'origin_result_len': len(origin_result_arr),
     })
+
   # 各タイプを考慮したランダム選択
   select_list = [0 for _ in range(conf.time_max * conf.type_sum)]
   for _ in range(conf.agent_sum):
@@ -82,12 +83,12 @@ def generate_new_solution(
       time_sum += select_list[i * conf.time_max + selected_time_i]
     if time_sum == (conf.unit_minute_max - conf.unit_minute_min):
       for i in range(conf.type_sum):
-        comp_map_per_time[i]['weights'] = 0
+        comp_map_per_time[i]['weights'][i * conf.time_max + selected_time_i] = 0
 
-  # for i in range(conf.type_sum):
-  #   logger.log_info( f'create-ans-{i} : { select_list[i*conf.time_max : (i+1)*conf.time_max] }' )
+  for i in range(conf.type_sum):
+    logger.log_debug( f'create-ans-{i} : { select_list[i*conf.time_max : (i+1)*conf.time_max] }' )
 
-  # logger.log_info(f'generate: {select_list}')
+  logger.log_debug(f'generate: {select_list}')
 
   checker.check_agent_length(select_list)
   checker.check_agent_sum(select_list)

@@ -24,7 +24,6 @@ def mutate(
   突然変異
   = 初期解生成時のランダム生成
   '''
-  logger.log_info('[mutate]')
   result = copy.copy(origin_solution)
   result_len = len(result)
 
