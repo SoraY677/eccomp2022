@@ -3,7 +3,7 @@ import shutil
 
 import logger
 import optimize_mock
-import optimize_prod
+import optimize_server
 
 from dotenv import load_dotenv
 load_dotenv()
@@ -48,7 +48,7 @@ def submit_server(solution_list, match_number, is_practice):
   if is_practice:
     return optimize_mock.optimize(solution_list)
 
-  return optimize_prod.optimize(solution_list, match_number)
+  return optimize_server.optimize(solution_list, match_number)
 
 def run(
   solution_list,
