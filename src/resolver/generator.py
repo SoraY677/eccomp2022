@@ -83,7 +83,7 @@ def generate_new_solution(
       time_sum += select_list[i * conf.time_max + selected_time_i]
     if time_sum == (conf.unit_minute_max - conf.unit_minute_min):
       for i in range(conf.type_sum):
-        comp_map_per_time[i]['weights'][i * conf.time_max + selected_time_i] = 0
+        comp_map_per_time[i]['weights'][selected_time_i] = 0
 
   for i in range(conf.type_sum):
     logger.log_debug( f'create-ans-{i} : { select_list[i*conf.time_max : (i+1)*conf.time_max] }' )
