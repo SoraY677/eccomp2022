@@ -45,6 +45,7 @@ def log_info(message:str) -> None:
 
 def log_warn(message:str) -> None:
   global _logger
+  print(f'[warn]{message}')
   _logger.warn(message)
 
 def log_error(message:str) -> None:
