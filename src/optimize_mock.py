@@ -32,12 +32,12 @@ def generate_answer(
       for _ in range(type_sum):
         weights_copy_list[selected_type_index][selected_time_index] = 0
   
-  logger.log_info(f'agent length check....: [length]{agent_sum} : [sum]{sum(select_list)}')
+  logger.log_debug(f'agent length check....: [length]{agent_sum} : [sum]{sum(select_list)}')
   if sum(select_list) != agent_sum:
     logger.log_error('agent length check fail!')
 
   isSizePass = max(select_list) <= ( unit_minute_max - unit_minute_min )
-  logger.log_info(f'agent size over check....: {max(select_list)}')
+  logger.log_debug(f'agent size over check....: {max(select_list)}')
   if not isSizePass:
     logger.log_error('agent size check fail!')
 

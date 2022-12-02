@@ -16,13 +16,13 @@ import logger
 import resolver_config as conf
 
 def check_agent_sum(count_list):
-  logger.log_info(f'agent length check....: [ans]{conf.agent_sum} : [try]{sum(count_list)}')
+  logger.log_debug(f'agent length check....: [ans]{conf.agent_sum} : [try]{sum(count_list)}')
   if sum(count_list) != conf.agent_sum:
     logger.log_error('agent length check fail!')
 
 def check_agent_length(result):
   length = len(result)
-  logger.log_info(f'agent length check....: [ans]{conf.time_max * conf.type_sum} : [try]{length}')
+  logger.log_debug(f'agent length check....: [ans]{conf.time_max * conf.type_sum} : [try]{length}')
   if length != conf.time_max * conf.type_sum:
     logger.log_error('agent length check fail!')
 

@@ -38,7 +38,7 @@ def run(
     cross_origin_result.extend(_cross_2solutions(arr_per_time1[i], arr_per_time2[i], cross_point_num))
   result, graph_path = generator.generate_new_solution(cross_origin_result)
   
-  logger.log_info(f'cross result: {result}')
+  logger.log_debug(f'cross result: {result}')
   return result, graph_path
 
 def _cross_2solutions(

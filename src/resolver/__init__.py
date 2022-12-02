@@ -70,7 +70,7 @@ def exec(
     } for i in range(conf.individual_num)]
     for solution_i in range(len(solution_list)):
       solution = solution_list[solution_i]
-      score = optimize_function(solution, conf.endpoint, is_practice)
+      score = optimize_function(solution, conf.match_number, is_practice)
       logger.log_info(f'{graph_path_list[solution_i]}')
       best_solution_map_list.append({
         'score': score,

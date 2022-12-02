@@ -15,7 +15,7 @@ unit_minute_max = 45
 agent_sum = 4500
 type_sum = 1
 submit_max = 1000
-endpoint = ''
+match_number = ''
 
 individual_num = 10 # 個体数
 evolve_max = None # 進化回数
@@ -33,7 +33,7 @@ def set_config(
     'unit_minute_max',
     'agent_sum',
     'type_sum',
-    'endpoint'
+    'match_number'
   ):
     global_map[key] = config_map[key]
 

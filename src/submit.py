@@ -44,7 +44,7 @@ def init(
       logger.log_info('not found prev score file')
       best_score_list = []
 
-def submit_server(solution, endpoint, is_practice):
+def submit_server(solution, match_number, is_practice):
   if is_practice:
     return optimize_mock.optimize(solution)
   score = random.random()
@@ -52,7 +52,7 @@ def submit_server(solution, endpoint, is_practice):
 
 def run(
   solution,
-  endpoint,
+  match_number,
   is_practice
 ):
   '''
@@ -61,7 +61,7 @@ def run(
   global best_score_list
   global filepath
   logger.log_info(f'[solution-submit]')
-  score = submit_server(solution, endpoint, is_practice)
+  score = submit_server(solution, match_number, is_practice)
   logger.log_info(f'score: {score}')
 
   # ベストスコア更新
