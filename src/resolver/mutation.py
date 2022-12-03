@@ -29,11 +29,12 @@ def mutate(
 
   LOOP_MAX = random.randint(int(conf.agent_sum / 2), conf.agent_sum)
   for _ in range(LOOP_MAX):
-    weights = [1 if origin_item > 0 else 0 for origin_item in origin_solution]
-    subtract_i = random.choices(list(range(result_len)), k=1, weights=weights)[0]
+    subtract_weights = [1 if origin_item > 0 else 0 for origin_item in origin_solution]
+    subtract_i = random.choices(list(range(result_len)), k=1, weights=subtract_weights)[0]
     result[subtract_i] -= 1
 
-    add_i = random.randint(0, result_len - 1)
+    add_weights = [1 if i == subtract_i  else 0 for i in range(len(origin_solution))]
+    add_i = random.choices(list(range(result_len)), k=1, weights=add_weights)[0]
     result[add_i] +=1
 
   return generator.generate_new_solution(result)
