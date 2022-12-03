@@ -48,16 +48,17 @@ def _cross_2solutions(
   '''
   実際の交叉部
   '''
-  is_selected_point_arr = [False for _ in range(len(arr1) - 1)]
+  is_selected_point_arr = [1 for _ in range(len(arr1) - 1)]
+  selected_point_arr = list(range(len(arr1) - 1))
   for _ in range(cross_point_num):
-    point_index = random.randint(0, len(is_selected_point_arr)-1)
-    is_selected_point_arr[point_index] = True
+    point_index = random.choices(selected_point_arr, k=1, weights=is_selected_point_arr)[0]
+    is_selected_point_arr[point_index] = 0
 
   result = []
   prev_point_index = 0
   is_target_arr1 = True
   for i in range(len(is_selected_point_arr)):
-    if is_selected_point_arr[i]:
+    if is_selected_point_arr[i] == 0:
       arr = arr1 if is_target_arr1 else arr2
       result += arr[prev_point_index:i+1]
       is_target_arr1 = not is_target_arr1
