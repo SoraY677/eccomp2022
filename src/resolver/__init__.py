@@ -89,7 +89,7 @@ def exec(
 
     for i in range(len(solution_list)):
       logger.log_info(f'{i}:')
-      logger.log_info(f'{solution_list[i][:3]}')
+      logger.log_debug(f'{solution_list[i]}')
       logger.log_info(f'{score_list[i]}')
       logger.log_info(f'{graph_path_list[i]}')
     store.save(count, solution_list, score_list, graph_path_list)
