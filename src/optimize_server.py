@@ -31,6 +31,9 @@ def _request_score_list(solution_list, match_number, time_max, type_sum):
     except:
       logger.log_warn('submit fail! (or solution broken)')
       score_list.append(sys.maxsize)
+
+  for proc in proc_list:
+    proc.terminate()
   return score_list
 
 def optimize(solution_list, match_number, time_max, type_sum):
