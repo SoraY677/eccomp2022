@@ -108,7 +108,8 @@ def exec(
         new_solution_list.append(solution)
         continue
       # 合成
-      if random.random() < 0.5:
+      # 解が同じ場合は交叉する意味がないので、強制合成
+      if select_i1 == select_i2 or random.random() < 0.5:
         logger.log_info(f'[union] {select_i1}:{select_i2}')
         solution, graph_path = union(selected_solution1, selected_solution2)
         graph_path_list.append(graph_path)
