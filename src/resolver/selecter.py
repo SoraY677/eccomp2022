@@ -21,7 +21,9 @@ def select(
   2個体選択
   '''
   score_list_sum = sum(score_list)
-  selected_weights = [score_list_sum - score for score in score_list]
+  select_priority_list = [score_list_sum - score for score in score_list]
+  select_priority_min = min(select_priority_list)
+  selected_weights = [priority / select_priority_min for priority in select_priority_list]
   logger.log_debug(f'selected weight: {selected_weights}')
 
   selected_index_list = random.choices(list(range(len(score_list))), k=2, weights=selected_weights)
