@@ -50,20 +50,6 @@ def _init():
   loop_start = 1 if _store_map is None else _store_map['count_index']
   return solution_list, graph_path_list, score_list, loop_start
 
-def _calc_mutate_rate(count, score_list):
-  '''
-  各スコアの差分比率合計から突然変異率を計算
-  '''
-  if count < 5: 
-    return 0.1
-
-  rate_sum = 0
-  for i in range(len(score_list) - 1):
-    rate_sum += score_list[i+1] / score_list[i]
-  rate_sum -= (len(score_list) - 1) * 3
-
-  return 0.3 - rate_sum
-
 def exec(
   config_map,
   id,
@@ -110,13 +96,12 @@ def exec(
 
     new_solution_list = []
     graph_path_list = []
-    mutate_rate = _calc_mutate_rate(count, score_list)
     for _ in range(conf.individual_num):
       select_i1, select_i2 = select(score_list)
       selected_solution1 = solution_list[select_i1]
       selected_solution2 = solution_list[select_i2]
       # 突然変異
-      if random.random() < mutate_rate:
+      if random.random() < 0.15:
         logger.log_info(f'[mutate] {select_i1}')
         solution, graph_path = mutate(selected_solution1)
         graph_path_list.append(graph_path)
@@ -133,7 +118,7 @@ def exec(
       # 交叉
       else:
         logger.log_info(f'[cross] {select_i1}:{select_i2}')
-        solution, graph_path = cross(selected_solution1, selected_solution2, 2)
+        solution, graph_path = cross(selected_solution1, selected_solution2, 20)
         graph_path_list.append(graph_path)
         new_solution_list.append(solution)
         continue
