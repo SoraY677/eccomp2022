@@ -56,26 +56,26 @@ def generate_new_solution(
   関数を確率に見立てて、制約条件から解を生成
   '''
   comp_map_per_time = []
+  origin_list_sum = sum(origin_list)
+  weights = []
   # 各エージェントタイプごとに近似関数他を生成
   for i in range(conf.type_sum):
     origin_list_per_time = copy.copy(origin_list[i*conf.time_max : (i+1)*conf.time_max])
     approximate = _calc_approximate_function(origin_list_per_time)
     origin_result_arr = [approximate[i] for i in range(len(origin_list_per_time))]
-    origin_result_sum = sum(origin_result_arr)
-    weights = [item / origin_result_sum for item in origin_result_arr]
+    weights.extend([item / origin_list_sum for item in origin_result_arr])
     comp_map_per_time.append({
       'approximate': approximate,
       'origin_result_arr': origin_result_arr,
-      'weights': weights,
       'origin_result_len': len(origin_result_arr),
     })
 
   # 各タイプを考慮したランダム選択
   select_list = [0 for _ in range(conf.time_max * conf.type_sum)]
   for _ in range(conf.agent_sum):
-    selected_type_i = random.randint(0, conf.type_sum - 1)
-    selected_time_i = random.choices(list(range(conf.time_max)), k=1, weights=comp_map_per_time[selected_type_i]['weights'])[0]
-    select_list[selected_type_i * conf.time_max + selected_time_i] += 1
+    selected_i = random.choices(list(range(conf.time_max * conf.type_sum)), k=1, weights=weights)[0]
+    selected_time_i = selected_i % conf.time_max
+    select_list[selected_i] += 1
 
     # 制約条件による生成時の制限
     time_sum = 0
@@ -83,7 +83,7 @@ def generate_new_solution(
       time_sum += select_list[i * conf.time_max + selected_time_i]
     if time_sum == (conf.unit_minute_max - conf.unit_minute_min):
       for i in range(conf.type_sum):
-        comp_map_per_time[i]['weights'][selected_time_i] = 0
+        weights[selected_time_i + i * conf.time_max] = 0
 
   for i in range(conf.type_sum):
     logger.log_debug( f'create-ans-{i} : { select_list[i*conf.time_max : (i+1)*conf.time_max] }' )
@@ -105,7 +105,8 @@ def generate_new_solution(
   plot_map['select_list_per_type'] = []
   for i in range(conf.type_sum):
     plot_map['select_list_per_type'].append({
-      'approximate': comp_map_per_time[i]['approximate']
+      'approximate': comp_map_per_time[i]['approximate'],
+      'select_list': select_list[i*conf.time_max : (i+1)*conf.time_max]
     })
   graph_name = graph_plotter.plot_person_per_time_and_approximate_function(np.arange(conf.time_max), plot_map)
 
