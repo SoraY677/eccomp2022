@@ -46,7 +46,7 @@ def init(
 
 def submit_server(solution_list, match_number, is_practice, time_max, type_sum):
   if is_practice:
-    return optimize_mock.optimize(solution_list, type_sum)
+    return optimize_mock.optimize(solution_list)
 
   return optimize_server.optimize(solution_list, match_number, time_max, type_sum)
 
