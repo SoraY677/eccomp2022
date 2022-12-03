@@ -33,7 +33,7 @@ sop:
       agent_sum: 4500
       type_sum: 3
       submit_max: 1000
-      endpoint: 85
+      match_number: 85
   prod:
     1:
       time_max: 300
@@ -42,7 +42,7 @@ sop:
       agent_sum: 4660
       type_sum: 1
       submit_max: 1000
-      endpoint: 51
+      match_number: 51
     2:
       time_max: 300
       unit_minute_min: 0
@@ -50,6 +50,6 @@ sop:
       agent_sum: 4079
       type_sum: 3
       submit_max: 1000
-      endpoint: 52
+      match_number: 52
 
 
