@@ -44,16 +44,18 @@ def init(
       logger.log_info('not found prev score file')
       best_score_list = []
 
-def submit_server(solution_list, match_number, is_practice):
+def submit_server(solution_list, match_number, is_practice, time_max, type_sum):
   if is_practice:
-    return optimize_mock.optimize(solution_list)
+    return optimize_mock.optimize(solution_list, type_sum)
 
-  return optimize_server.optimize(solution_list, match_number)
+  return optimize_server.optimize(solution_list, match_number, time_max, type_sum)
 
 def run(
   solution_list,
   match_number,
-  is_practice
+  is_practice,
+  time_max,
+  type_sum
 ):
   '''
   解提出
@@ -61,7 +63,7 @@ def run(
   global best_score_list
   global filepath
   logger.log_info(f'[solution-list-submit]')
-  score_list = submit_server(solution_list, match_number, is_practice)
+  score_list = submit_server(solution_list, match_number, is_practice, time_max, type_sum)
 
   submit_min_score = min(score_list)
   # ベストスコア更新

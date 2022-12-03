@@ -6,13 +6,20 @@ import logger
 
 def _decode_response(response):
   decoded_response = json.loads(response)
-  return float(decoded_response['score'])
+  logger.log_info(f'response result: {decoded_response}')
+  return float(decoded_response['objective'])
 
-def _request_score_list(solution_list, match_number):
+def _request_score_list(solution_list, match_number, time_max, type_sum):
   score_list = []
   proc_list = []
   for solution in solution_list:
-    command = f'echo {solution} | opt submit --match={match_number}'
+    if type_sum == 1:
+      command = f'echo {solution} | opt submit --match={match_number}'
+    else: 
+      solution_per_type = []
+      for i in range(type_sum):
+        solution_per_type.append(solution[i*time_max : (i+1)*time_max-1])
+      command = f'echo {solution_per_type} | opt submit --match={match_number}'
     proc = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, shell=True)
     proc_list.append(proc)
 
@@ -26,8 +33,8 @@ def _request_score_list(solution_list, match_number):
       score_list.append(sys.maxsize)
   return score_list
 
-def optimize(solution_list, match_number):
-  score_list = _request_score_list(solution_list, match_number)
+def optimize(solution_list, match_number, time_max, type_sum):
+  score_list = _request_score_list(solution_list, match_number, time_max, type_sum)
   return score_list
 
 if __name__ == "__main__":

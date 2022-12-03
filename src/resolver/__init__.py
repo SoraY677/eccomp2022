@@ -71,7 +71,7 @@ def exec(
   for count in range(loop_start, conf.evolve_max + 1):
     logger.log_info(f'+++++ calculation {count} +++++')
 
-    score_list = optimize_function(solution_list, conf.match_number, is_practice)
+    score_list = optimize_function(solution_list, conf.match_number, is_practice, conf.time_max, conf.type_sum)
 
     for solution_i in range(len(solution_list)):
       solution = solution_list[solution_i]

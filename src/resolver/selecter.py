@@ -23,7 +23,7 @@ def select(
   score_list_sum = sum(score_list)
   selected_weights = [(score_list_sum - score) for score in score_list]
   selected_weights = [ weight - selected_weights[-1] + 1 for weight in selected_weights]
-  logger.log_info(f'selected weight: {selected_weights}')
+  logger.log_debug(f'selected weight: {selected_weights}')
 
   selected_index_list = random.choices(list(range(len(score_list))), k=2, weights=selected_weights)
   logger.log_debug(f'select index: {selected_index_list}')
