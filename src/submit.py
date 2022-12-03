@@ -68,6 +68,7 @@ def run(
   best_score = submit_min_score if(len(best_score_list) == 0) else best_score_list[-1]
   if(submit_min_score < best_score):
     message = f'[++++best score updated!+++++]{submit_min_score}'
+    print(submit_min_score)
     logger.log_info(f'{message}')
     best_score = submit_min_score
   best_score_list.append(best_score)
