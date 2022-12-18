@@ -146,3 +146,5 @@ $ conda remove -n eccomp2022 --all
 
 - 山口要約：https://github.com/SoraY677/eccomp2022/blob/develop/doc/概要-山口要約.md
 - 最適化方針：https://github.com/SoraY677/eccomp2022/blob/develop/doc/最適化方針.md
+- 結果：https://github.com/SoraY677/eccomp2022/blob/develop/doc/結果.md
+- 発表資料：https://github.com/SoraY677/eccomp2022/blob/develop/doc/進化計算コンペティション2022　山口　発表資料.pptx
